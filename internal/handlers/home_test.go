@@ -56,7 +56,7 @@ func getBody(t *testing.T, h http.Handler, target string) (int, string) {
 	return rr.Code, rr.Body.String()
 }
 
-func TestHome_PutsNextVideoFirst(t *testing.T) {
+func TestHome_IndexPutsNextFirst(t *testing.T) {
 	s := setupTestStore(t)
 	seedResumo(t, s, "a1", "antigo", "Vídeo Antigo", "2026-10-01")
 	seedResumo(t, s, "a2", "novo", "Vídeo Novo", "2026-10-12")
@@ -65,19 +65,17 @@ func TestHome_PutsNextVideoFirst(t *testing.T) {
 	if code != http.StatusOK {
 		t.Fatalf("status = %d, want 200", code)
 	}
-	iNovo := strings.Index(body, "v=novo")
-	iAntigo := strings.Index(body, "v=antigo")
+	iNovo := strings.Index(body, "/videos/novo")
+	iAntigo := strings.Index(body, "/videos/antigo")
 	if iNovo == -1 || iAntigo == -1 {
-		t.Fatalf("abas ausentes no body (novo=%d, antigo=%d)", iNovo, iAntigo)
+		t.Fatalf("cards ausentes no body (novo=%d, antigo=%d)", iNovo, iAntigo)
 	}
 	if iNovo > iAntigo {
-		t.Errorf("o vídeo mais novo (próximo) deve vir primeiro: novo@%d antigo@%d", iNovo, iAntigo)
+		t.Errorf("o próximo (novo) deve vir primeiro: novo@%d antigo@%d", iNovo, iAntigo)
 	}
-	if !strings.Contains(body, "▶") {
-		t.Errorf("faltou o marcador ▶ de próximo")
-	}
-	if !strings.Contains(body, "resumo de Vídeo Novo") {
-		t.Errorf("a aba ativa deveria ser o próximo (Vídeo Novo)")
+	flag := strings.Index(body, `data-proximo="true"`)
+	if flag == -1 || flag > iAntigo {
+		t.Errorf("o destaque ▶ deveria estar no card do próximo (flag@%d, antigo@%d)", flag, iAntigo)
 	}
 }
 
@@ -90,11 +88,11 @@ func TestHome_SearchFilters(t *testing.T) {
 	if code != http.StatusOK {
 		t.Fatalf("status = %d, want 200", code)
 	}
-	if !strings.Contains(body, "v=antigo") {
-		t.Errorf("busca por 'antigo' deveria manter a aba antigo")
+	if !strings.Contains(body, "/videos/antigo") {
+		t.Errorf("busca por 'antigo' deveria manter o card antigo")
 	}
-	if strings.Contains(body, "v=novo") {
-		t.Errorf("busca por 'antigo' não deveria mostrar a aba novo")
+	if strings.Contains(body, "/videos/novo") {
+		t.Errorf("busca por 'antigo' não deveria mostrar o card novo")
 	}
 }
 
@@ -106,5 +104,21 @@ func TestHome_EmptyState(t *testing.T) {
 	}
 	if !strings.Contains(body, "Ainda não há resumos") {
 		t.Errorf("esperado empty state, body começa com: %.200s", body)
+	}
+}
+
+func TestHome_RedirectsLegacyVParam(t *testing.T) {
+	s := setupTestStore(t)
+	seedResumo(t, s, "a1", "antigo", "Vídeo Antigo", "2026-10-01")
+
+	req := httptest.NewRequest(http.MethodGet, "/?v=antigo", nil)
+	rr := httptest.NewRecorder()
+	newHome(t, s).ServeHTTP(rr, req)
+
+	if rr.Code != http.StatusSeeOther {
+		t.Fatalf("status = %d, want 303", rr.Code)
+	}
+	if loc := rr.Header().Get("Location"); loc != "/videos/antigo" {
+		t.Errorf("Location = %q, want /videos/antigo", loc)
 	}
 }

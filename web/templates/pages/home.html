@@ -1,6 +1,6 @@
 {{ define "content" }}
 <div class="mx-auto max-w-[920px] py-4">
-  <p class="sr-meta"><span>YT Resumos</span><span>{{ .Total }} vídeos no arquivo</span><span>o próximo fica sempre na primeira aba</span></p>
+  <p class="sr-meta"><span>YT Resumos</span><span>{{ .Total }} vídeos no arquivo</span><span>o próximo fica sempre no topo</span></p>
 
   <form method="get" action="/" role="search" class="mt-2 mb-1 flex flex-wrap gap-2">
     <input type="search" name="q" value="{{ .Q }}" placeholder="buscar por título, canal ou tag…"
@@ -9,23 +9,32 @@
     {{ if .Q }}<a href="/" class="px-3 py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-foam/50 transition-colors hover:text-copper">Limpar</a>{{ end }}
   </form>
 
-  {{ if .Tabs }}
-  <nav class="sr-tabs" aria-label="Vídeos resumidos">
-    {{ range .Tabs }}
-    <a href="/?v={{ .Slug }}{{ if $.Q }}&q={{ $.Q | urlquery }}{{ end }}" {{ if .Active }}aria-current="true"{{ end }}>{{ if .Proximo }}▶ {{ end }}{{ .Title }}</a>
+  {{ if .Cards }}
+  <div class="sr-index">
+    {{ range .Cards }}
+    <a class="sr-item" href="/videos/{{ .Slug }}"{{ if .Proximo }} data-proximo="true"{{ end }}>
+      {{ if .Proximo }}<span class="sr-flag">▶ Próximo</span>{{ end }}
+      {{ if .Kicker }}<p class="sr-item-kicker">{{ .Kicker }}</p>{{ end }}
+      <h2 class="sr-item-title">{{ .TitleA }}{{ if .TitleEm }} <em>{{ .TitleEm }}</em>{{ end }}</h2>
+      {{ if .Lede }}<p class="sr-item-lede">{{ .Lede }}</p>{{ end }}
+      <div class="sr-item-foot">
+        {{ if .Channel }}<span>{{ .Channel }}</span>{{ end }}
+        {{ if .Date }}<span>{{ .Date }}</span>{{ end }}
+        {{ if .Duration }}<span>{{ .Duration }}</span>{{ end }}
+        {{ if .Threads }}<span>{{ .Threads }} threads analisados</span>{{ end }}
+        <span class="sr-item-go">ler o super resumo →</span>
+      </div>
+      {{ if .Tags }}<div class="mt-2">{{ range .Tags }}<span class="sr-pill">{{ . }}</span>{{ end }}</div>{{ end }}
+    </a>
     {{ end }}
-  </nav>
-  {{ end }}
-
-  {{ if .Resumo }}
-    {{ template "resumo" .Resumo }}
+  </div>
   {{ else }}
   <section class="sr-thesis" data-placa="{{ if .Q }}Sem resultado{{ else }}Arquivo vazio{{ end }}">
     {{ if .Q }}
     <p><strong>Nenhum resumo bate com “{{ .Q }}”.</strong> Tenta outro termo — a busca varre título, canal, tags e o TL;DR.</p>
     <p><a href="/">← limpar busca</a></p>
     {{ else }}
-    <p><strong>Ainda não há resumos por aqui.</strong> Manda a transcrição + comentários de um vídeo que o primeiro entra na primeira aba.</p>
+    <p><strong>Ainda não há resumos por aqui.</strong> Manda a transcrição + comentários de um vídeo que o primeiro entra no topo.</p>
     {{ end }}
   </section>
   {{ end }}

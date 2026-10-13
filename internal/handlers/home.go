@@ -26,36 +26,65 @@ func NewHomeHandler(views *view.Renderer, s store.Store, site meta.Site, catalog
 }
 
 func (h *HomeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if slug := strings.TrimSpace(r.URL.Query().Get("v")); slug != "" {
+		http.Redirect(w, r, "/videos/"+slug, http.StatusSeeOther)
+		return
+	}
+
 	videos, err := h.store.ListVideos("")
 	if err != nil {
 		http.Error(w, "erro ao listar os resumos", http.StatusInternalServerError)
 		return
 	}
 
-	q := strings.TrimSpace(r.URL.Query().Get("q"))
-	filtered := filterVideos(videos, q)
-	active, ok := pickActive(filtered, r.URL.Query().Get("v"))
-
-	var resumo *models.Resumo
-	if ok {
-		rv, err := models.ParseResumo(active.Payload)
-		if err != nil {
-			http.Error(w, "erro ao carregar o resumo", http.StatusInternalServerError)
-			return
-		}
-		resumo = &rv
+	// The "próximo" is the first of the unfiltered list — it keeps the ▶ badge
+	// even while searching (project invariant).
+	proximoSlug := ""
+	if len(videos) > 0 {
+		proximoSlug = videos[0].Slug
 	}
+
+	q := strings.TrimSpace(r.URL.Query().Get("q"))
+	cards := indexCards(filterVideos(videos, q), proximoSlug)
 
 	view.Write(w, r, h.views, view.Page{
 		Layout: "app",
 		Name:   "home",
 		Data: amarraData(r, h.site, map[string]any{
-			"Q":      q,
-			"Tabs":   tabsFrom(filtered, active.Slug),
-			"Resumo": resumo,
-			"Total":  len(videos),
+			"Q":     q,
+			"Cards": cards,
+			"Total": len(videos),
 		}),
 	}, h.cfg)
+}
+
+func indexCards(videos []models.Video, proximoSlug string) []indexCard {
+	cards := make([]indexCard, 0, len(videos))
+	for _, v := range videos {
+		card := indexCard{
+			Slug:    v.Slug,
+			Channel: v.Channel,
+			Date:    v.PublishedAt,
+			Proximo: v.Slug == proximoSlug,
+		}
+		if r, err := models.ParseResumo(v.Payload); err == nil {
+			card.Kicker = r.Kicker
+			card.TitleA = r.H1A
+			card.TitleEm = r.H1Em
+			card.Lede = r.Lede
+			card.Duration = r.DurationLabel()
+			card.Threads = r.Comentarios.Threads
+			card.Tags = r.Tags
+			if card.Channel == "" {
+				card.Channel = r.Channel
+			}
+		}
+		if card.TitleA == "" {
+			card.TitleA = v.Title
+		}
+		cards = append(cards, card)
+	}
+	return cards
 }
 
 func filterVideos(videos []models.Video, q string) []models.Video {
@@ -70,32 +99,4 @@ func filterVideos(videos []models.Video, q string) []models.Video {
 		}
 	}
 	return out
-}
-
-// pickActive prefers ?v=<slug>; otherwise the first of the list — the "próximo"
-// is always the first item on the page (project invariant).
-func pickActive(videos []models.Video, want string) (models.Video, bool) {
-	if len(videos) == 0 {
-		return models.Video{}, false
-	}
-	for _, v := range videos {
-		if v.Slug == want {
-			return v, true
-		}
-	}
-	return videos[0], true
-}
-
-func tabsFrom(videos []models.Video, activeSlug string) []tabView {
-	tabs := make([]tabView, 0, len(videos))
-	for i, v := range videos {
-		tabs = append(tabs, tabView{
-			Slug:    v.Slug,
-			Title:   v.Title,
-			Channel: v.Channel,
-			Active:  v.Slug == activeSlug,
-			Proximo: i == 0,
-		})
-	}
-	return tabs
 }

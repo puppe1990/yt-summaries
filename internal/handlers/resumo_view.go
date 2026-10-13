@@ -1,11 +1,17 @@
 package handlers
 
-// tabView is one video link on the home tab bar. The first tab is always the
-// "próximo" (newest) — project invariant.
-type tabView struct {
-	Slug    string
-	Title   string
-	Channel string
-	Active  bool
-	Proximo bool
+// indexCard is one item on the root index (list of resumos). The first item of
+// the unfiltered list is the "próximo" — project invariant.
+type indexCard struct {
+	Slug     string
+	Kicker   string
+	TitleA   string
+	TitleEm  string
+	Lede     string
+	Channel  string
+	Date     string
+	Duration string
+	Threads  int
+	Tags     []string
+	Proximo  bool
 }
