@@ -1,9 +1,10 @@
 {
-  "youtube_id": "wajoP_5Cpw8",
+  "source_id": "wajoP_5Cpw8",
+  "source_type": "youtube",
   "slug": "every-app-open-source",
   "url": "https://www.youtube.com/watch?v=wajoP_5Cpw8",
   "title": "Every app on Earth is now open source... whether it likes it or not",
-  "channel": "Fireship",
+  "source": "Fireship",
   "thumbnail": "https://i.ytimg.com/vi/wajoP_5Cpw8/hqdefault.jpg",
   "published_at": "2026-10-12",
   "duration_s": 352,

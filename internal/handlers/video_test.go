@@ -42,6 +42,23 @@ func TestVideo_Found(t *testing.T) {
 	}
 }
 
+func TestVideo_LegacyRedirect(t *testing.T) {
+	s := setupTestStore(t)
+	seedResumo(t, s, "a1", "antigo", "Vídeo Antigo", "2026-10-01")
+
+	req := httptest.NewRequest(http.MethodGet, "/videos/antigo", nil)
+	req.SetPathValue("slug", "antigo")
+	rr := httptest.NewRecorder()
+	newVideo(t, s).LegacyRedirect(rr, req)
+
+	if rr.Code != http.StatusMovedPermanently {
+		t.Fatalf("status = %d, want 301", rr.Code)
+	}
+	if loc := rr.Header().Get("Location"); loc != "/resumos/antigo" {
+		t.Errorf("Location = %q, want /resumos/antigo", loc)
+	}
+}
+
 func TestVideo_NotFound(t *testing.T) {
 	s := setupTestStore(t)
 	code, body := getVideoBody(t, newVideo(t, s), "nao-existe")

@@ -27,7 +27,7 @@ func NewHomeHandler(views *view.Renderer, s store.Store, site meta.Site, catalog
 
 func (h *HomeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if slug := strings.TrimSpace(r.URL.Query().Get("v")); slug != "" {
-		http.Redirect(w, r, "/videos/"+slug, http.StatusSeeOther)
+		http.Redirect(w, r, "/resumos/"+slug, http.StatusSeeOther)
 		return
 	}
 

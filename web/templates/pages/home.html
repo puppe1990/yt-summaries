@@ -1,6 +1,6 @@
 {{ define "content" }}
 <div class="mx-auto max-w-[920px] py-4">
-  <p class="sr-meta"><span>YT Resumos</span><span>{{ .Total }} vídeos no arquivo</span><span>o próximo fica sempre no topo</span></p>
+  <p class="sr-meta"><span>YT Resumos</span><span>{{ .Total }} resumos no arquivo</span><span>o próximo fica sempre no topo</span></p>
 
   <form method="get" action="/" role="search" class="mt-2 mb-1 flex flex-wrap gap-2">
     <input type="search" name="q" value="{{ .Q }}" placeholder="buscar por título, canal ou tag…"
@@ -12,7 +12,7 @@
   {{ if .Cards }}
   <div class="sr-index">
     {{ range .Cards }}
-    <a class="sr-item" href="/videos/{{ .Slug }}"{{ if .Proximo }} data-proximo="true"{{ end }}>
+    <a class="sr-item" href="/resumos/{{ .Slug }}"{{ if .Proximo }} data-proximo="true"{{ end }}>
       {{ if .Proximo }}<span class="sr-flag">▶ Próximo</span>{{ end }}
       {{ if .Kicker }}<p class="sr-item-kicker">{{ .Kicker }}</p>{{ end }}
       <h2 class="sr-item-title">{{ .TitleA }}{{ if .TitleEm }} <em>{{ .TitleEm }}</em>{{ end }}</h2>
@@ -34,7 +34,7 @@
     <p><strong>Nenhum resumo bate com “{{ .Q }}”.</strong> Tenta outro termo — a busca varre título, canal, tags e o TL;DR.</p>
     <p><a href="/">← limpar busca</a></p>
     {{ else }}
-    <p><strong>Ainda não há resumos por aqui.</strong> Manda a transcrição + comentários de um vídeo que o primeiro entra no topo.</p>
+    <p><strong>Ainda não há resumos por aqui.</strong> Manda o material de um conteúdo (transcrição, texto, comentários) que o primeiro entra no topo.</p>
     {{ end }}
   </section>
   {{ end }}

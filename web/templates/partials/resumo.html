@@ -5,12 +5,13 @@
     <h1 class="sr-title">{{ .H1A }}{{ if .H1Em }} <em>{{ .H1Em }}</em>{{ end }}{{ if .H1B }} {{ .H1B }}{{ end }}</h1>
     {{ if .Lede }}<p class="sr-lede">{{ .Lede }}</p>{{ end }}
     <div class="sr-meta">
-      <span>{{ .Channel }}</span>
+      <span>{{ .SourceName }}</span>
+      {{ if .SourceType }}<span>{{ .SourceType }}</span>{{ end }}
       {{ if .PublishedAt }}<span>{{ .PublishedAt }}</span>{{ end }}
       {{ with .DurationLabel }}<span>{{ . }}</span>{{ end }}
-      <span>{{ .Comentarios.Threads }} threads analisados</span>
-      {{ if .URL }}<a href="{{ .URL }}" target="_blank" rel="noopener noreferrer">assistir no YouTube ↗</a>{{ end }}
-      <a href="/videos/{{ .Slug }}">link permanente ↗</a>
+      {{ if .Comentarios.Threads }}<span>{{ .Comentarios.Threads }} threads analisados</span>{{ end }}
+      {{ if .URL }}<a href="{{ .URL }}" target="_blank" rel="noopener noreferrer">abrir a fonte ↗</a>{{ end }}
+      <a href="/resumos/{{ .Slug }}">link permanente ↗</a>
     </div>
     {{ if .Tags }}<div class="mt-3">{{ range .Tags }}<span class="sr-pill">{{ . }}</span>{{ end }}</div>{{ end }}
   </header>
@@ -52,11 +53,13 @@
   </div>
   {{ end }}
 
+  {{ if .Comentarios.Threads }}
   <h2 class="sr-h2"><span>A plateia</span>{{ .Comentarios.Threads }} vozes no recorte</h2>
   <div class="sr-meta">
     {{ if .Comentarios.ColetadoEm }}<span>coleta {{ .Comentarios.ColetadoEm }}</span>{{ end }}
     {{ if .Comentarios.Esperado }}<span>~{{ .Comentarios.Esperado }} comentários no total</span>{{ end }}
   </div>
+  {{ end }}
   {{ if .Comentarios.Distribuicao }}
   <div class="mt-2 mb-4">{{ range .Comentarios.Distribuicao }}<span class="sr-pill">{{ .Faixa }} likes · {{ .N }}</span>{{ end }}</div>
   {{ end }}

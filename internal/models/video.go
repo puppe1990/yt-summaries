@@ -27,11 +27,16 @@ type Video struct {
 // dhh-rails-world-2026: kicker, h1 editorial, placas de tese, seções numeradas,
 // citações com tradução e leitura da audiência).
 type Resumo struct {
-	YouTubeID   string   `json:"youtube_id"`
+	SourceID   string `json:"source_id,omitempty"`
+	Source     string `json:"source,omitempty"`
+	SourceType string `json:"source_type,omitempty"`
+	// Legacy field names (pre-2026-10 payloads): youtube_id/channel.
+	YouTubeID string `json:"youtube_id,omitempty"`
+	Channel   string `json:"channel,omitempty"`
+
 	Slug        string   `json:"slug"`
 	URL         string   `json:"url"`
 	Title       string   `json:"title"`
-	Channel     string   `json:"channel"`
 	Thumbnail   string   `json:"thumbnail"`
 	PublishedAt string   `json:"published_at"`
 	DurationS   int      `json:"duration_s"`
@@ -118,6 +123,24 @@ type Tema struct {
 	Exemplos []Comentario `json:"exemplos"`
 }
 
+// Key returns the unique source id: source_id, falling back to the legacy
+// youtube_id so old payloads keep working.
+func (r Resumo) Key() string {
+	if r.SourceID != "" {
+		return r.SourceID
+	}
+	return r.YouTubeID
+}
+
+// SourceName returns the source label (channel, profile, author, site):
+// source, falling back to the legacy channel field.
+func (r Resumo) SourceName() string {
+	if r.Source != "" {
+		return r.Source
+	}
+	return r.Channel
+}
+
 // ParseResumo decodes a stored payload.
 func ParseResumo(payload string) (Resumo, error) {
 	var r Resumo
@@ -129,7 +152,7 @@ func ParseResumo(payload string) (Resumo, error) {
 
 // SearchText builds the lower-case haystack used by the ?q= filter.
 func (r Resumo) SearchText() string {
-	parts := []string{r.Title, r.Channel, r.Slug, r.H1A, r.H1Em, r.H1B, r.Lede, strings.Join(r.Tags, " "), strings.Join(r.TLDR, " ")}
+	parts := []string{r.Title, r.SourceName(), r.SourceType, r.Slug, r.H1A, r.H1Em, r.H1B, r.Lede, strings.Join(r.Tags, " "), strings.Join(r.TLDR, " ")}
 	return strings.ToLower(strings.Join(parts, " "))
 }
 

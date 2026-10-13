@@ -53,6 +53,16 @@ func (h *VideoHandler) serve(w http.ResponseWriter, r *http.Request, slug string
 	}), http.StatusOK)
 }
 
+// LegacyRedirect sends the old /videos/<slug> URLs to /resumos/<slug>.
+func (h *VideoHandler) LegacyRedirect(w http.ResponseWriter, r *http.Request) {
+	slug := r.PathValue("slug")
+	if slug == "" {
+		h.NotFound(w, r)
+		return
+	}
+	http.Redirect(w, r, "/resumos/"+slug, http.StatusMovedPermanently)
+}
+
 // NotFound also serves unmatched routes (registered via r.NotFound).
 func (h *VideoHandler) NotFound(w http.ResponseWriter, r *http.Request) {
 	writeView(w, r, h.views, h.cfg, "app", "notfound", amarraData(r, h.site, map[string]any{

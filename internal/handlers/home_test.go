@@ -65,8 +65,8 @@ func TestHome_IndexPutsNextFirst(t *testing.T) {
 	if code != http.StatusOK {
 		t.Fatalf("status = %d, want 200", code)
 	}
-	iNovo := strings.Index(body, "/videos/novo")
-	iAntigo := strings.Index(body, "/videos/antigo")
+	iNovo := strings.Index(body, "/resumos/novo")
+	iAntigo := strings.Index(body, "/resumos/antigo")
 	if iNovo == -1 || iAntigo == -1 {
 		t.Fatalf("cards ausentes no body (novo=%d, antigo=%d)", iNovo, iAntigo)
 	}
@@ -88,10 +88,10 @@ func TestHome_SearchFilters(t *testing.T) {
 	if code != http.StatusOK {
 		t.Fatalf("status = %d, want 200", code)
 	}
-	if !strings.Contains(body, "/videos/antigo") {
+	if !strings.Contains(body, "/resumos/antigo") {
 		t.Errorf("busca por 'antigo' deveria manter o card antigo")
 	}
-	if strings.Contains(body, "/videos/novo") {
+	if strings.Contains(body, "/resumos/novo") {
 		t.Errorf("busca por 'antigo' não deveria mostrar o card novo")
 	}
 }
@@ -118,7 +118,7 @@ func TestHome_RedirectsLegacyVParam(t *testing.T) {
 	if rr.Code != http.StatusSeeOther {
 		t.Fatalf("status = %d, want 303", rr.Code)
 	}
-	if loc := rr.Header().Get("Location"); loc != "/videos/antigo" {
-		t.Errorf("Location = %q, want /videos/antigo", loc)
+	if loc := rr.Header().Get("Location"); loc != "/resumos/antigo" {
+		t.Errorf("Location = %q, want /resumos/antigo", loc)
 	}
 }

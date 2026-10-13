@@ -35,14 +35,14 @@ func importVideoFile(s store.Store, fsys fs.FS, name string) error {
 	if err := json.Unmarshal(raw, &r); err != nil {
 		return fmt.Errorf("parse %s: %w", name, err)
 	}
-	if r.YouTubeID == "" || r.Slug == "" || r.Title == "" {
-		return fmt.Errorf("resumo %s: youtube_id, slug and title are required", name)
+	if r.Key() == "" || r.Slug == "" || r.Title == "" {
+		return fmt.Errorf("resumo %s: source_id (or youtube_id), slug and title are required", name)
 	}
 	v := models.Video{
-		YouTubeID:   r.YouTubeID,
+		YouTubeID:   r.Key(),
 		Slug:        r.Slug,
 		Title:       r.Title,
-		Channel:     r.Channel,
+		Channel:     r.SourceName(),
 		URL:         r.URL,
 		Thumbnail:   r.Thumbnail,
 		PublishedAt: r.PublishedAt,
