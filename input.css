@@ -10,14 +10,14 @@
     /* Paleta darkroom/paper — design base: dhh-rails-world-2026 */
     --amarra-ink: 18 14 11; /* #120e0b darkroom */
     --amarra-foam: 239 228 207; /* #efe4cf paper */
-    --amarra-copper: 196 92 38; /* #c45c26 ember */
+    --amarra-copper: 95 179 168; /* #5fb3a8 patina — legível no darkroom */
     --amarra-tide: 58 36 24; /* #3a2418 mahogany */
   }
 
   html.light {
     --amarra-ink: 246 237 220; /* #f6eddc */
     --amarra-foam: 59 43 32; /* #3b2b20 */
-    --amarra-copper: 138 69 31; /* #8a451f */
+    --amarra-copper: 26 111 100; /* #1a6f64 */
     --amarra-tide: 234 220 197; /* #eadcc5 */
   }
 
@@ -363,10 +363,12 @@
   --sr-paper-2: #f7efdc;
   --sr-darkroom: #120e0b;
   --sr-mahogany: #3a2418;
-  --sr-ember: #c45c26;
+  --sr-ember: #5fb3a8;
+  --sr-ember-strong: #1f7a6e;
+  --sr-shadow: rgba(95, 179, 168, 0.16);
   --sr-gold: #d4a574;
   --sr-muted: #8a7662;
-  --sr-line: rgba(196, 92, 38, 0.28);
+  --sr-line: rgba(95, 179, 168, 0.28);
   --sr-card: #1b1612;
   --sr-card-line: #3a2d22;
   --sr-text: #efe6d4;
@@ -378,6 +380,9 @@ html.light {
   --sr-paper-2: #24170f;
   --sr-darkroom: #f6eddc;
   --sr-gold: #8a451f;
+  --sr-ember: #1a6f64;
+  --sr-ember-strong: #1a6f64;
+  --sr-shadow: rgba(26, 111, 100, 0.18);
   --sr-muted: #705e4e;
   --sr-ink: #1c140e;
   --sr-card: #eadcc5;
@@ -503,7 +508,7 @@ html.light .sr-sprocket {
   color: var(--sr-ink);
   padding: 1.5rem 1.35rem 1.4rem;
   border-radius: 2px;
-  box-shadow: 12px 18px 0 rgba(196, 92, 38, 0.18);
+  box-shadow: 12px 18px 0 var(--sr-shadow);
   position: relative;
   margin: 2rem 0 2.6rem;
 }
@@ -513,7 +518,7 @@ html.light .sr-sprocket {
   position: absolute;
   top: -0.7rem;
   left: 1rem;
-  background: var(--sr-ember);
+  background: var(--sr-ember-strong);
   color: var(--sr-paper);
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.62rem;
@@ -714,7 +719,7 @@ html.light .sr-quote p {
 html.light .sr-title em,
 html.light .sr-h2 span,
 html.light .sr-pill {
-  color: #8a451f;
+  color: #1a6f64;
 }
 
 .sr-index {
@@ -741,13 +746,13 @@ html.light .sr-pill {
 }
 
 .sr-item[data-proximo="true"] {
-  border-color: rgba(196, 92, 38, 0.55);
-  box-shadow: 12px 18px 0 rgba(196, 92, 38, 0.14);
+  border-color: rgba(95, 179, 168, 0.55);
+  box-shadow: 12px 18px 0 var(--sr-shadow);
 }
 
 .sr-flag {
   display: inline-block;
-  background: var(--sr-ember);
+  background: var(--sr-ember-strong);
   color: var(--sr-paper);
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.6rem;
@@ -816,5 +821,5 @@ html.light .sr-item-title {
 }
 
 html.light .sr-item:hover .sr-item-title {
-  color: #8a451f;
+  color: #1a6f64;
 }
