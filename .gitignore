@@ -1,0 +1,16 @@
+bin/
+# data/: resumo payloads + raw originals stay versioned; ignore db/tmp
+# (a bare data/ ignore would block re-including the subfolders)
+data/*
+!data/embed.go
+!data/videos/
+!data/raw/
+web/static/css/styles.css
+node_modules/
+tmp/
+.air/
+*.db
+.env
+.env.*
+!.env.example
+.DS_Store
