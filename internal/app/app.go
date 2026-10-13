@@ -18,8 +18,8 @@ import (
 	"github.com/puppe1990/amarra-cais/pkg/cais/middleware"
 	"github.com/puppe1990/amarra-cais/pkg/cais/netutil"
 
-	appi18n "github.com/puppe1990/yt-resumos/internal/i18n"
-	"github.com/puppe1990/yt-resumos/internal/store"
+	appi18n "github.com/puppe1990/yt-summaries/internal/i18n"
+	"github.com/puppe1990/yt-summaries/internal/store"
 )
 
 type Deps struct {

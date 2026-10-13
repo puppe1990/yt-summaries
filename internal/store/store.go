@@ -12,7 +12,7 @@ import (
 	"github.com/puppe1990/amarra-cais/pkg/cais/sqllog"
 	_ "modernc.org/sqlite"
 
-	"github.com/puppe1990/yt-resumos/internal/models"
+	"github.com/puppe1990/yt-summaries/internal/models"
 )
 
 type Store interface {

@@ -9,8 +9,8 @@ import (
 	"github.com/puppe1990/amarra-cais/pkg/cais/i18n"
 	"github.com/puppe1990/amarra-cais/pkg/cais/meta"
 
-	"github.com/puppe1990/yt-resumos/internal/models"
-	"github.com/puppe1990/yt-resumos/internal/store"
+	"github.com/puppe1990/yt-summaries/internal/models"
+	"github.com/puppe1990/yt-summaries/internal/store"
 )
 
 type HomeHandler struct {

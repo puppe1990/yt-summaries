@@ -6,8 +6,8 @@ import (
 	"io/fs"
 	"sort"
 
-	"github.com/puppe1990/yt-resumos/internal/models"
-	"github.com/puppe1990/yt-resumos/internal/store"
+	"github.com/puppe1990/yt-summaries/internal/models"
+	"github.com/puppe1990/yt-summaries/internal/store"
 )
 
 // ImportVideos upserts every embedded data/videos/*.json into SQLite.

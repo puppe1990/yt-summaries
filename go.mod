@@ -1,4 +1,4 @@
-module github.com/puppe1990/yt-resumos
+module github.com/puppe1990/yt-summaries
 
 go 1.26.4
 

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/puppe1990/yt-resumos/internal/models"
+	"github.com/puppe1990/yt-summaries/internal/models"
 )
 
 var ErrVideoNotFound = errors.New("video not found")

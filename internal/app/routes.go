@@ -4,7 +4,7 @@ import (
 	"github.com/puppe1990/amarra-cais/pkg/amarra/live"
 	"github.com/puppe1990/amarra-cais/pkg/cais"
 
-	"github.com/puppe1990/yt-resumos/internal/handlers"
+	"github.com/puppe1990/yt-summaries/internal/handlers"
 )
 
 func registerRoutes(r *cais.Router, deps Deps, cfg cais.Config) {

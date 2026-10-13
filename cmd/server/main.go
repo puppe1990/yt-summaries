@@ -15,12 +15,12 @@ import (
 	"github.com/puppe1990/amarra-cais/pkg/cais/i18n"
 	"github.com/puppe1990/amarra-cais/pkg/cais/meta"
 
-	"github.com/puppe1990/yt-resumos/data"
-	"github.com/puppe1990/yt-resumos/internal/app"
-	"github.com/puppe1990/yt-resumos/internal/db"
-	appi18n "github.com/puppe1990/yt-resumos/internal/i18n"
-	"github.com/puppe1990/yt-resumos/internal/store"
-	"github.com/puppe1990/yt-resumos/web"
+	"github.com/puppe1990/yt-summaries/data"
+	"github.com/puppe1990/yt-summaries/internal/app"
+	"github.com/puppe1990/yt-summaries/internal/db"
+	appi18n "github.com/puppe1990/yt-summaries/internal/i18n"
+	"github.com/puppe1990/yt-summaries/internal/store"
+	"github.com/puppe1990/yt-summaries/web"
 )
 
 func main() {

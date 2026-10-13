@@ -8,8 +8,8 @@ import (
 	"github.com/puppe1990/amarra-cais/pkg/amarra/view"
 	"github.com/puppe1990/amarra-cais/pkg/cais/meta"
 
-	appi18n "github.com/puppe1990/yt-resumos/internal/i18n"
-	"github.com/puppe1990/yt-resumos/internal/store"
+	appi18n "github.com/puppe1990/yt-summaries/internal/i18n"
+	"github.com/puppe1990/yt-summaries/internal/store"
 )
 
 func testSite() meta.Site {

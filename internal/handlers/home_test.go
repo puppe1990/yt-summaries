@@ -9,9 +9,9 @@ import (
 
 	"github.com/puppe1990/amarra-cais/pkg/cais"
 
-	appi18n "github.com/puppe1990/yt-resumos/internal/i18n"
-	"github.com/puppe1990/yt-resumos/internal/models"
-	"github.com/puppe1990/yt-resumos/internal/store"
+	appi18n "github.com/puppe1990/yt-summaries/internal/i18n"
+	"github.com/puppe1990/yt-summaries/internal/models"
+	"github.com/puppe1990/yt-summaries/internal/store"
 )
 
 func seedResumo(t *testing.T, s store.Store, videoID, slug, title, published string) {
