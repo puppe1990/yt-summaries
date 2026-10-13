@@ -36,9 +36,9 @@ func (h *HomeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	filtered := filterVideos(videos, q)
 	active, ok := pickActive(filtered, r.URL.Query().Get("v"))
 
-	var resumo *resumoView
+	var resumo *models.Resumo
 	if ok {
-		rv, err := buildResumoView(active)
+		rv, err := models.ParseResumo(active.Payload)
 		if err != nil {
 			http.Error(w, "erro ao carregar o resumo", http.StatusInternalServerError)
 			return

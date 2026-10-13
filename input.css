@@ -7,17 +7,18 @@
      the default dark harbor, html.light (amarra-theme hook) the light one. Keep
      the ink/foam/copper/tide keys — kit classes and the doctor read them (#258). */
   :root {
-    --amarra-ink: 8 16 20;
-    --amarra-foam: 243 234 216;
-    --amarra-copper: 201 137 58;
-    --amarra-tide: 20 52 60;
+    /* Paleta darkroom/paper — design base: dhh-rails-world-2026 */
+    --amarra-ink: 18 14 11; /* #120e0b darkroom */
+    --amarra-foam: 239 228 207; /* #efe4cf paper */
+    --amarra-copper: 196 92 38; /* #c45c26 ember */
+    --amarra-tide: 58 36 24; /* #3a2418 mahogany */
   }
 
   html.light {
-    --amarra-ink: 246 241 231;
-    --amarra-foam: 12 24 28;
-    --amarra-copper: 150 96 28;
-    --amarra-tide: 217 228 228;
+    --amarra-ink: 246 237 220; /* #f6eddc */
+    --amarra-foam: 59 43 32; /* #3b2b20 */
+    --amarra-copper: 138 69 31; /* #8a451f */
+    --amarra-tide: 234 220 197; /* #eadcc5 */
   }
 
   body {
@@ -352,4 +353,406 @@
       opacity: 1;
     }
   }
+}
+
+/* ── Super resumo (design base: dhh-rails-world-2026) ──────────────────
+   Componentes prefixados sr- para não colidir com o kit do Amarra. */
+:root {
+  --sr-ink: #1c140e;
+  --sr-paper: #efe4cf;
+  --sr-paper-2: #f7efdc;
+  --sr-darkroom: #120e0b;
+  --sr-mahogany: #3a2418;
+  --sr-ember: #c45c26;
+  --sr-gold: #d4a574;
+  --sr-muted: #8a7662;
+  --sr-line: rgba(196, 92, 38, 0.28);
+  --sr-card: #1b1612;
+  --sr-card-line: #3a2d22;
+  --sr-text: #efe6d4;
+  --sr-text-dim: #d8cbb6;
+}
+
+html.light {
+  --sr-paper: #f4ead7;
+  --sr-paper-2: #24170f;
+  --sr-darkroom: #f6eddc;
+  --sr-gold: #8a451f;
+  --sr-muted: #705e4e;
+  --sr-ink: #1c140e;
+  --sr-card: #eadcc5;
+  --sr-card-line: rgba(84, 53, 34, 0.25);
+  --sr-text: #3b2b20;
+  --sr-text-dim: #49382c;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+}
+
+html.light body::before {
+  opacity: 0.035;
+}
+
+.sr-sprocket {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  z-index: 30;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 18px,
+    #2a2118 18px 28px,
+    transparent 28px 46px
+  );
+  opacity: 0.55;
+}
+
+.sr-sprocket.left {
+  left: 0;
+  border-right: 1px solid var(--sr-card-line);
+}
+
+.sr-sprocket.right {
+  right: 0;
+  border-left: 1px solid var(--sr-card-line);
+}
+
+html.light .sr-sprocket {
+  opacity: 0.18;
+}
+
+@media (max-width: 900px) {
+  .sr-sprocket {
+    display: none;
+  }
+}
+
+.sr-hero {
+  position: relative;
+  padding: 1.4rem 0 0.6rem;
+}
+
+.sr-kicker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sr-gold);
+  margin: 0 0 1.1rem;
+}
+
+.sr-title {
+  font-family: "Fraunces", serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 6vw, 3.9rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  margin: 0 0 1rem;
+  color: var(--sr-paper-2);
+}
+
+.sr-title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--sr-ember);
+}
+
+.sr-lede {
+  font-family: "Fraunces", serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  line-height: 1.32;
+  max-width: 42rem;
+  color: var(--sr-gold);
+  margin: 0 0 1.3rem;
+}
+
+.sr-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.3rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.74rem;
+  color: var(--sr-muted);
+  margin: 0 0 0.6rem;
+}
+
+.sr-meta a {
+  color: var(--sr-gold);
+}
+
+.sr-rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--sr-ember), transparent 80%);
+  border: 0;
+  margin: 2rem 0;
+}
+
+.sr-thesis {
+  background: var(--sr-paper);
+  color: var(--sr-ink);
+  padding: 1.5rem 1.35rem 1.4rem;
+  border-radius: 2px;
+  box-shadow: 12px 18px 0 rgba(196, 92, 38, 0.18);
+  position: relative;
+  margin: 2rem 0 2.6rem;
+}
+
+.sr-thesis::before {
+  content: attr(data-placa);
+  position: absolute;
+  top: -0.7rem;
+  left: 1rem;
+  background: var(--sr-ember);
+  color: var(--sr-paper);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+}
+
+.sr-thesis p {
+  margin: 0 0 0.7rem;
+  font-size: 1.08rem;
+  color: var(--sr-ink);
+}
+
+.sr-thesis p:last-child {
+  margin-bottom: 0;
+}
+
+.sr-thesis strong {
+  font-family: "Fraunces", serif;
+  font-weight: 800;
+}
+
+html.light .sr-thesis {
+  background: #fff8ea;
+}
+
+.sr-h2 {
+  font-family: "Fraunces", serif;
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3.2vw, 2rem);
+  letter-spacing: -0.03em;
+  margin: 2.5rem 0 0.9rem;
+  color: var(--sr-paper-2);
+}
+
+.sr-h2 span {
+  display: block;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sr-ember);
+  margin-bottom: 0.35rem;
+}
+
+.sr-sub {
+  font-family: "Fraunces", serif;
+  font-size: 1.12rem;
+  color: var(--sr-paper-2);
+  margin: 2rem 0 0.6rem;
+}
+
+.sr-grid-2,
+.sr-grid-3 {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.2rem 0 1.6rem;
+}
+
+@media (min-width: 700px) {
+  .sr-grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sr-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.sr-card {
+  background: var(--sr-card);
+  border: 1px solid var(--sr-card-line);
+  padding: 1.05rem 1rem 0.95rem;
+  min-height: 100%;
+}
+
+.sr-card .sr-n {
+  font-family: "Fraunces", serif;
+  font-weight: 800;
+  font-size: 1.85rem;
+  color: var(--sr-ember);
+  line-height: 1;
+  margin-bottom: 0.45rem;
+}
+
+.sr-card h3 {
+  font-family: "Fraunces", serif;
+  font-size: 1.05rem;
+  margin: 0 0 0.4rem;
+  color: var(--sr-paper-2);
+}
+
+.sr-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--sr-text-dim);
+}
+
+.sr-card .sr-bullets {
+  margin: 0;
+}
+
+.sr-bullets {
+  margin: 0 0 1.2rem;
+  padding: 0 0 0 1.1rem;
+  color: var(--sr-text);
+}
+
+.sr-bullets li {
+  margin: 0 0 0.45rem;
+}
+
+.sr-pull {
+  margin: 1.6rem 0;
+  padding: 0 0 0 1.1rem;
+  border-left: 4px solid var(--sr-ember);
+  font-family: "Fraunces", serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.15rem, 2.6vw, 1.55rem);
+  line-height: 1.3;
+  color: var(--sr-gold);
+}
+
+.sr-pull cite {
+  display: block;
+  margin-top: 0.55rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  font-style: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sr-muted);
+}
+
+.sr-comments {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0 1.6rem;
+}
+
+.sr-quote {
+  background: #181410;
+  border: 1px solid var(--sr-card-line);
+  padding: 0.9rem 1rem;
+}
+
+html.light .sr-quote {
+  background: var(--sr-card);
+  border-color: var(--sr-card-line);
+}
+
+.sr-quote p {
+  margin: 0 0 0.4rem;
+  font-style: italic;
+  color: var(--sr-paper);
+}
+
+html.light .sr-quote p {
+  color: var(--sr-ink);
+}
+
+.sr-quote small {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  color: var(--sr-muted);
+}
+
+.sr-translation {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--sr-gold);
+  font-size: 0.88em;
+  font-style: italic;
+}
+
+.sr-translation::before {
+  content: "PT · ";
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72em;
+  font-style: normal;
+  letter-spacing: 0.08em;
+}
+
+.sr-pill {
+  display: inline-block;
+  border: 1px solid var(--sr-ember);
+  color: var(--sr-ember);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  margin: 0 0.35rem 0.35rem 0;
+}
+
+.sr-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  margin: 0.8rem 0 1.6rem;
+  border-bottom: 1px solid var(--sr-card-line);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(18, 14, 11, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+html.light .sr-tabs {
+  background: rgba(246, 237, 220, 0.94);
+}
+
+.sr-tabs a {
+  color: var(--sr-muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.8rem 0.55rem 0.7rem;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  text-decoration: none;
+}
+
+.sr-tabs a[aria-current="true"] {
+  color: var(--sr-paper-2);
+  border-bottom-color: var(--sr-ember);
+}
+
+.sr-tabs a:hover {
+  color: var(--sr-gold);
+}
+
+html.light .sr-title em,
+html.light .sr-h2 span,
+html.light .sr-pill {
+  color: #8a451f;
 }

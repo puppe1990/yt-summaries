@@ -9,6 +9,7 @@ import (
 	"github.com/puppe1990/amarra-cais/pkg/cais/i18n"
 	"github.com/puppe1990/amarra-cais/pkg/cais/meta"
 
+	"github.com/puppe1990/yt-resumos/internal/models"
 	"github.com/puppe1990/yt-resumos/internal/store"
 )
 
@@ -41,7 +42,7 @@ func (h *VideoHandler) serve(w http.ResponseWriter, r *http.Request, slug string
 		http.Error(w, "erro ao carregar o vídeo", http.StatusInternalServerError)
 		return
 	}
-	rv, err := buildResumoView(v)
+	rv, err := models.ParseResumo(v.Payload)
 	if err != nil {
 		http.Error(w, "erro ao carregar o resumo", http.StatusInternalServerError)
 		return

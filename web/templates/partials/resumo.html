@@ -1,113 +1,113 @@
 {{ define "resumo" }}
-<article class="mt-8">
-  <header class="border border-copper/40 bg-ink/70 p-6 sm:p-8">
-    <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-copper">{{ .Channel }}{{ if .PublishedAt }} · {{ .PublishedAt }}{{ end }}{{ if .Duration }} · {{ .Duration }}{{ end }}</p>
-    <h2 class="mt-3 font-serif text-3xl leading-tight text-foam">{{ .Title }}</h2>
-    {{ if .Tags }}
-    <div class="mt-4 flex flex-wrap gap-2">
-      {{ range .Tags }}<span class="border border-foam/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-foam/55">{{ . }}</span>{{ end }}
+<article class="sr-resumo">
+  <header class="sr-hero">
+    {{ if .Kicker }}<p class="sr-kicker">{{ .Kicker }}</p>{{ end }}
+    <h1 class="sr-title">{{ .H1A }}{{ if .H1Em }} <em>{{ .H1Em }}</em>{{ end }}{{ if .H1B }} {{ .H1B }}{{ end }}</h1>
+    {{ if .Lede }}<p class="sr-lede">{{ .Lede }}</p>{{ end }}
+    <div class="sr-meta">
+      <span>{{ .Channel }}</span>
+      {{ if .PublishedAt }}<span>{{ .PublishedAt }}</span>{{ end }}
+      {{ with .DurationLabel }}<span>{{ . }}</span>{{ end }}
+      <span>{{ .Comentarios.Threads }} threads analisados</span>
+      {{ if .URL }}<a href="{{ .URL }}" target="_blank" rel="noopener noreferrer">assistir no YouTube ↗</a>{{ end }}
+      <a href="/videos/{{ .Slug }}">link permanente ↗</a>
     </div>
-    {{ end }}
-    <div class="mt-5 flex flex-wrap gap-3">
-      {{ if .URL }}<a href="{{ .URL }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-copper px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-ink transition-colors hover:bg-foam">▶ Assistir no YouTube</a>{{ end }}
-      <a href="/videos/{{ .Slug }}" class="inline-flex items-center gap-2 border border-copper/40 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-copper transition-colors hover:border-copper">Link permanente</a>
-    </div>
+    {{ if .Tags }}<div class="mt-3">{{ range .Tags }}<span class="sr-pill">{{ . }}</span>{{ end }}</div>{{ end }}
   </header>
 
-  {{ if .Thumbnail }}
-  <img src="{{ .Thumbnail }}" alt="Thumbnail do vídeo no YouTube" loading="lazy" class="mt-6 w-full border border-foam/10" />
+  {{ range .Tese }}
+  <section class="sr-thesis" data-placa="{{ .Placa }}">
+    <p>{{ if .Lead }}<strong>{{ .Lead }}</strong> {{ end }}{{ .Texto }}</p>
+  </section>
   {{ end }}
 
   {{ if .TLDR }}
-  <section class="mt-6 border border-copper/40 bg-ink/70 p-6 sm:p-8">
-    <h3 class="font-mono text-[11px] uppercase tracking-[0.28em] text-copper">Em 30 segundos</h3>
-    <ul class="mt-4 space-y-2">
-      {{ range .TLDR }}<li class="flex gap-3 text-foam/85"><span aria-hidden="true" class="text-copper">—</span><span>{{ . }}</span></li>{{ end }}
-    </ul>
-  </section>
+  <h2 class="sr-h2"><span>Em 30 segundos</span>O vídeo em cinco tiros</h2>
+  <ul class="sr-bullets">{{ range .TLDR }}<li>{{ . }}</li>{{ end }}</ul>
   {{ end }}
 
-  {{ if .Secoes }}
-  <section class="mt-6 border border-foam/10 bg-ink/60 p-6 sm:p-8">
-    <h3 class="font-mono text-[11px] uppercase tracking-[0.28em] text-copper">O vídeo, em blocos</h3>
-    <div class="mt-4 space-y-6">
-      {{ range .Secoes }}
-      <div class="border-l-2 border-copper/40 pl-4">
-        <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-copper/80">{{ .T }}</p>
-        <h4 class="mt-1 font-serif text-xl text-foam">{{ .Titulo }}</h4>
-        <ul class="mt-2 space-y-1 text-foam/75">
-          {{ range .Bullets }}<li>· {{ . }}</li>{{ end }}
-        </ul>
-      </div>
-      {{ end }}
-    </div>
-  </section>
+  {{ range .Secoes }}
+  <h2 class="sr-h2"><span>{{ .N }} · {{ .Tag }}{{ if .T }} · {{ .T }}{{ end }}</span>{{ .Titulo }}</h2>
+  {{ if .Bullets }}<ul class="sr-bullets">{{ range .Bullets }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
   {{ end }}
 
   {{ if .Numeros }}
-  <section class="mt-6 grid gap-3 sm:grid-cols-3">
-    {{ range .Numeros }}
-    <div class="border border-copper/30 bg-ink/70 p-4">
-      <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-foam/50">{{ .Label }}</p>
-      <p class="mt-1 font-serif text-2xl text-copper">{{ .Valor }}</p>
-    </div>
-    {{ end }}
-  </section>
+  <h2 class="sr-h2"><span>Números</span>O vídeo em cifras</h2>
+  <div class="sr-grid-3">
+    {{ range .Numeros }}<article class="sr-card"><div class="sr-n">{{ .Valor }}</div><h3>{{ .Label }}</h3></article>{{ end }}
+  </div>
   {{ end }}
 
   {{ if .Citacoes }}
-  <section class="mt-6 border border-foam/10 bg-ink/60 p-6 sm:p-8">
-    <h3 class="font-mono text-[11px] uppercase tracking-[0.28em] text-copper">Citações</h3>
-    <div class="mt-4 space-y-3">
-      {{ range .Citacoes }}<blockquote class="border-l-2 border-copper pl-4 font-serif text-lg italic text-foam/85">“{{ . }}”</blockquote>{{ end }}
-    </div>
-  </section>
+  <h2 class="sr-h2"><span>Citações</span>O que ficou da fala</h2>
+  {{ range .Citacoes }}
+  <blockquote class="sr-pull">“{{ .Texto }}”{{ if .Traducao }}<span class="sr-translation">{{ .Traducao }}</span>{{ end }}<cite>{{ .Fonte }}</cite></blockquote>
+  {{ end }}
   {{ end }}
 
-  {{ if .Comentarios.Threads }}
-  <section class="mt-6 border border-copper/40 bg-ink/70 p-6 sm:p-8">
-    <h3 class="font-mono text-[11px] uppercase tracking-[0.28em] text-copper">A audiência disse</h3>
-    <p class="mt-3 text-foam/75">Threads analisados: <strong class="text-foam">{{ .Comentarios.Threads }}</strong>{{ if .Comentarios.Esperado }} de ~{{ .Comentarios.Esperado }} no total{{ end }}{{ if .Comentarios.ColetadoEm }} · coleta {{ .Comentarios.ColetadoEm }}{{ end }}</p>
-    {{ if .Comentarios.Distribuicao }}
-    <div class="mt-4 flex flex-wrap gap-2">
-      {{ range .Comentarios.Distribuicao }}<span class="border border-foam/15 px-2 py-1 font-mono text-[10px] text-foam/60">{{ .Faixa }} likes · <strong class="text-copper">{{ .N }}</strong></span>{{ end }}
-    </div>
+  {{ if .Aplicacao }}
+  <h2 class="sr-h2"><span>Levar para casa</span>O que fazer com isso</h2>
+  <div class="sr-grid-2">
+    {{ range .Aplicacao }}<article class="sr-card"><h3>{{ .Titulo }}</h3><p>{{ .Texto }}</p></article>{{ end }}
+  </div>
+  {{ end }}
+
+  <h2 class="sr-h2"><span>A plateia</span>{{ .Comentarios.Threads }} vozes no recorte</h2>
+  <div class="sr-meta">
+    {{ if .Comentarios.ColetadoEm }}<span>coleta {{ .Comentarios.ColetadoEm }}</span>{{ end }}
+    {{ if .Comentarios.Esperado }}<span>~{{ .Comentarios.Esperado }} comentários no total</span>{{ end }}
+  </div>
+  {{ if .Comentarios.Distribuicao }}
+  <div class="mt-2 mb-4">{{ range .Comentarios.Distribuicao }}<span class="sr-pill">{{ .Faixa }} likes · {{ .N }}</span>{{ end }}</div>
+  {{ end }}
+
+  {{ if .Comentarios.Top }}
+  <h3 class="sr-sub">Top comentários</h3>
+  <div class="sr-comments">
+    {{ range .Comentarios.Top }}
+    <div class="sr-quote"><p>“{{ .Texto }}”{{ if .Traducao }}<span class="sr-translation">{{ .Traducao }}</span>{{ end }}</p><small>{{ .Autor }} · {{ .Likes }}</small></div>
     {{ end }}
-    {{ if .Comentarios.Temas }}
-    <div class="mt-6 space-y-5">
-      {{ range .Comentarios.Temas }}
-      <div class="border border-foam/10 bg-ink/60 p-5">
-        <h4 class="font-serif text-xl text-foam">{{ .Titulo }}</h4>
-        {{ if .Resumo }}<p class="mt-1 text-foam/70">{{ .Resumo }}</p>{{ end }}
-        {{ if .Exemplos }}
-        <ul class="mt-3 space-y-2">
-          {{ range .Exemplos }}
-          <li class="border-l-2 border-copper/40 pl-3">
-            <p class="text-foam/85">{{ .Texto }}</p>
-            <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-foam/45">{{ .Autor }} · {{ .Likes }} likes</p>
-          </li>
-          {{ end }}
-        </ul>
-        {{ end }}
-      </div>
+  </div>
+  {{ end }}
+
+  {{ if .Comentarios.Temas }}
+  <h3 class="sr-sub">Temas dominantes</h3>
+  <div class="sr-grid-2">
+    {{ range .Comentarios.Temas }}
+    <article class="sr-card">
+      <h3>{{ .Titulo }}</h3>
+      <p>{{ .Resumo }}</p>
+      {{ range .Exemplos }}
+      <div class="sr-quote mt-3"><p>“{{ .Texto }}”{{ if .Traducao }}<span class="sr-translation">{{ .Traducao }}</span>{{ end }}</p><small>{{ .Autor }} · {{ .Likes }}</small></div>
       {{ end }}
-    </div>
+    </article>
     {{ end }}
-    {{ if .Comentarios.Top }}
-    <h4 class="mt-6 font-mono text-[11px] uppercase tracking-[0.24em] text-copper">Top comentários</h4>
-    <ol class="mt-3 space-y-3">
-      {{ range .Comentarios.Top }}
-      <li class="border border-foam/10 bg-ink/60 p-4">
-        <p class="text-foam/85">{{ .Texto }}</p>
-        <p class="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-foam/45">{{ .Autor }} · {{ .Likes }} likes</p>
-      </li>
-      {{ end }}
-    </ol>
-    {{ end }}
-    {{ if .Comentarios.Veredito }}
-    <p class="mt-6 border-l-2 border-copper pl-4 text-foam/85"><strong class="text-copper">Veredito:</strong> {{ .Comentarios.Veredito }}</p>
-    {{ end }}
-  </section>
+  </div>
+  {{ end }}
+
+  {{ if or .Comentarios.InsightsPositivos .Comentarios.InsightsNegativos }}
+  <h3 class="sr-sub">Insights positivos × negativos</h3>
+  <div class="sr-grid-2">
+    <article class="sr-card">
+      <h3>Insights positivos</h3>
+      <ul class="sr-bullets">{{ range .Comentarios.InsightsPositivos }}<li><strong>{{ .Titulo }}</strong> — {{ .Texto }}</li>{{ end }}</ul>
+    </article>
+    <article class="sr-card">
+      <h3>Insights negativos</h3>
+      <ul class="sr-bullets">{{ range .Comentarios.InsightsNegativos }}<li><strong>{{ .Titulo }}</strong> — {{ .Texto }}</li>{{ end }}</ul>
+    </article>
+  </div>
+  {{ end }}
+
+  {{ if or .Comentarios.Consenso .Comentarios.Briga }}
+  <div class="sr-grid-2">
+    <article class="sr-card"><h3>Consenso amplo</h3><ul class="sr-bullets">{{ range .Comentarios.Consenso }}<li>{{ . }}</li>{{ end }}</ul></article>
+    <article class="sr-card"><h3>Briga em aberto</h3><ul class="sr-bullets">{{ range .Comentarios.Briga }}<li>{{ . }}</li>{{ end }}</ul></article>
+  </div>
+  {{ end }}
+
+  {{ if .Comentarios.Veredito }}
+  <section class="sr-thesis" data-placa="Veredito"><p>{{ .Comentarios.Veredito }}</p></section>
   {{ end }}
 </article>
 {{ end }}

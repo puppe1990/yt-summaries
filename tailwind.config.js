@@ -30,9 +30,9 @@ module.exports = {
         tide: "rgb(var(--amarra-tide) / <alpha-value>)",
       },
       fontFamily: {
-        sans: ["Avenir Next", "Segoe UI", "Helvetica Neue", "system-ui", "sans-serif"],
-        serif: ["Iowan Old Style", "Palatino Linotype", "Palatino", "Georgia", "serif"],
-        display: ["Iowan Old Style", "Palatino Linotype", "Palatino", "Georgia", "serif"],
+        sans: ["Source Serif 4", "Georgia", "serif"],
+        serif: ["Fraunces", "Georgia", "serif"],
+        display: ["Fraunces", "Georgia", "serif"],
         mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       boxShadow: {

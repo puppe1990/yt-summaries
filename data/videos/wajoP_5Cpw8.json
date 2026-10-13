@@ -8,107 +8,171 @@
   "published_at": "2026-10-12",
   "duration_s": 352,
   "tags": ["adobe", "reverse-engineering", "ai", "rust", "open-source", "artcraft", "rea"],
+  "kicker": "Fireship · Code Report · 12 out 2026",
+  "h1_a": "Todo app do planeta virou código aberto.",
+  "h1_em": "Faltou combinar com o slop.",
+  "h1_b": "",
+  "lede": "O REA transforma qualquer binário em código legível com Node + MCP + Ghidra; o Fireship testou o ArtCraft na timeline do próprio vídeo e descobriu: o gargalo já não é acesso ao código — é qualidade.",
+  "tese": [
+    {
+      "placa": "Tese 01",
+      "lead": "A frase-tese.",
+      "texto": "“Virtually every app in the world is now open source, whether it wants to be or not” — e a demo prova na prática: a timeline do Premiere instalado vira pseudo-código e volta reescrita em Rust."
+    },
+    {
+      "placa": "Tese 02",
+      "lead": "O contra-exemplo na mesma timeline.",
+      "texto": "O ArtCraft existe, é grátis e roda em Linux — e trava. Acesso ao código não é qualidade; o slop vibe-coded ainda é o que segura os gigantes de pé."
+    },
+    {
+      "placa": "Tese 03",
+      "lead": "A tese econômica.",
+      "texto": "“Esse dinheiro deveria estar queimando tokens”: ferramenta paga é dívida, agente é ativo. Dele nascem o Studbase (clone enxuto do Supabase) e os benchmarks “trust me bro”."
+    }
+  ],
   "tldr": [
-    "Um dev (Brandon Thomas) reescreveu 7 apps da Adobe em Rust com Claude e liberou tudo de graça no ArtCraft — mas o teste do Fireship mostra o catch: o FilmCraft é “a nearly unusable pile of vibecoded horseshit” (trava, engasga, transições glitchadas).",
-    "A estrela real do vídeo é o REA (Reverse Engineer Anything): MCP + Ghidra que decompila praticamente qualquer binário — ELF/PE/Mach-O, JVM, ECMA-335, firmware, camadas OCI — e devolve pseudo-código + assembly para um agente reimplementar.",
-    "Fluxo demonstrado ao vivo: inspecionar a integração de timeline do Premiere instalado → decompilar com o Ghidra → passar o resultado para o agente → reescrever a feature em Rust rumo ao “Premiere Light”, só com as features que importam.",
-    "A tese: praticamente todo app do mundo virou “open source” se você tiver um agente — o gargalo agora é qualidade de implementação, não acesso ao código, e o próprio vídeo prova isso na pele.",
-    "Piada que virou tese econômica: pagar ferramenta de dev em 2026 é absurdo — “esse dinheiro deveria estar queimando tokens” — daí nascem o Studbase (clone enxuto do Supabase) e os benchmarks “trust me bro”."
+    "Um dev (Brandon Thomas) reescreveu 7 apps da Adobe em Rust com Claude e liberou tudo de graça no ArtCraft — mas o teste do Fireship mostra o catch: o FilmCraft é “a nearly unusable pile of vibecoded horseshit”.",
+    "A estrela do vídeo é o REA (Reverse Engineer Anything): MCP + Ghidra que decompila praticamente qualquer binário — ELF/PE/Mach-O, JVM, ECMA-335, firmware, camadas OCI — e devolve pseudo-código + assembly para um agente reimplementar.",
+    "Fluxo demonstrado ao vivo: inspecionar a timeline do Premiere instalado → decompilar → passar o resultado para o agente → reescrever em Rust, rumo ao “Premiere Light” só com as features que importam.",
+    "A tese: praticamente todo app do mundo virou “open source” se você tiver um agente — o gargalo agora é qualidade de implementação, não acesso — e o próprio vídeo prova isso na pele.",
+    "Nos comentários, a plateia virou auditoria (o erro do DaVinci Resolve) e dividiu o mundo entre a era dos piratas e o lockdown cloud/DRM/TEE."
   ],
   "secoes": [
     {
-      "t": "0:00",
-      "titulo": "Gancho: ArtCraft",
+      "n": "01", "tag": "Gancho", "t": "0:00",
+      "titulo": "ArtCraft em 40 segundos",
       "bullets": [
         "Um dev (Brandon Thomas) se cansou do modelo predatório da Adobe — depois de pagar taxa de cancelamento mais de uma vez — abriu o Claude e reescreveu 7 apps da Creative Cloud em Rust: Photoshop, Illustrator, Premiere.",
         "O projeto (ArtCraft) é open source, gratuito, e roda até em Linux — plataforma que a Adobe nunca suportou oficialmente.",
-        "O convite do roteiro: “você, ser humano assistindo, pode fazer o mesmo” — e é aí que entra o REA."
+        "O convite do roteiro: “você, ser humano assistindo, pode fazer o mesmo”."
       ]
     },
     {
-      "t": "0:28",
-      "titulo": "A estrela do vídeo: REA (Reverse Engineer Anything)",
+      "n": "02", "tag": "Protagonista", "t": "0:28",
+      "titulo": "O REA decompila o mundo",
       "bullets": [
-        "Decompila praticamente qualquer artefato: executáveis stripped ELF/PE/Mach-O, bytecode JVM com constant pools ofuscados, assemblies ECMA-335, firmware bare-metal com instruction sets específicos e até camadas de container OCI entrelaçadas em manifests declarativos.",
+        "Reverse Engineer Anything decompila praticamente qualquer artefato: executáveis stripped ELF/PE/Mach-O, bytecode JVM com constant pools ofuscados, assemblies ECMA-335, firmware bare-metal e até camadas de container OCI.",
         "A frase-tese do episódio: “virtually every app in the world is now open source, whether it wants to be or not”.",
         "Missão declarada: descobrir se isso é “o último prego no caixão do software como conhecemos”."
       ]
     },
     {
-      "t": "1:13",
-      "titulo": "O teste real: FilmCraft",
+      "n": "03", "tag": "Teste real", "t": "1:13",
+      "titulo": "FilmCraft na timeline do próprio vídeo",
       "bullets": [
         "Na superfície, é verdade: dá para baixar a versão Rust de qualquer app Adobe de graça — “isso é incrível”.",
-        "O plano do Fireship: editar o próprio vídeo no FilmCraft, clone 1:1 da UI do Premiere — zero curva de aprendizado.",
-        "As rachaduras aparecem no teste: lag enorme nas barras de áudio ao dar play num clipe stock e lentidão geral — “apesar de ser escrito em Rust, que me disseram ser uma linguagem blazingly fast”."
+        "O plano: editar o próprio vídeo no FilmCraft, clone 1:1 da UI do Premiere — zero curva de aprendizado.",
+        "As rachaduras aparecem no teste: lag enorme nas barras de áudio ao dar play num clipe stock e lentidão geral — “apesar de ser escrito em Rust, que me disseram ser blazingly fast”."
       ]
     },
     {
-      "t": "1:35",
-      "titulo": "O tributo de US$ 69 e a primeira (grande) correção",
+      "n": "04", "tag": "Rachaduras", "t": "1:35",
+      "titulo": "Transições medíocres e o tributo de US$ 69",
       "bullets": [
-        "Enquanto isso, ele segue pagando “US$ 69 de tributo” por mês para usar o Premiere — daí a sede por uma alternativa.",
         "Transições entre clipes: “nowhere near the quality of Premiere” — o vídeo mostra o glitch lado a lado.",
+        "Enquanto isso, ele segue pagando “US$ 69 de tributo” por mês para usar o Premiere — daí a sede por uma alternativa.",
         "O erro que os comentários não perdoam: o vídeo chama o DaVinci Resolve de “open source alternative” — é freeware, não open source."
       ]
     },
     {
-      "t": "2:24",
-      "titulo": "O veredito e o auto-título que virou meme",
+      "n": "05", "tag": "Virada", "t": "2:24",
+      "titulo": "O veredito (e o auto-título que virou meme)",
       "bullets": [
         "Conclusão honesta: o software é “a nearly unusable pile of vibecoded horseshit” — e o FilmCraft “ainda não está bom o suficiente, mas eu sinceramente espero que chegue lá. Porque, Adobe…” (a frase termina num corte).",
         "Auto-descrição que virou o selo do canal nos comentários: “for someone like me who’s a once-in-a-generation cinematic visionary… the Stanley Kubrick of sponsored shitposts”."
       ]
     },
     {
-      "t": "2:35",
-      "titulo": "Plano B: reverse-engineer o próprio Premiere",
+      "n": "06", "tag": "Plano B", "t": "2:35",
+      "titulo": "Reverse-engineer o próprio Premiere",
       "bullets": [
         "Premiere tem centenas de features que ele não usa e que só atrapalham — por que não reconstruir só o que importa?",
         "O código é C/C++ trancado (propriedade intelectual da Adobe), mas o binário roda na sua máquina: “com muito trabalho, é tecnicamente possível mapear os uns e zeros de volta para algo parecido com código legível”.",
-        "Objetivo: um “Premiere Light” gratuito, com só as features que importam — e rodando o REA faz isso até “para quem não sabe contar até três em binário”."
+        "Objetivo: um “Premiere Light” gratuito, só com as features que importam — o REA faz isso até “para quem não sabe contar até três em binário”."
       ]
     },
     {
-      "t": "2:45",
-      "titulo": "REA na prática: Node + MCP + Ghidra",
+      "n": "07", "tag": "Mãos à obra", "t": "2:45",
+      "titulo": "Node + MCP + Ghidra, e o crédito é todo dele",
       "bullets": [
-        "Setup: rodar o REA com Node.js e o comando MCP; como ele está “num computador de perdedor no Windows”, configura a integração com o Ghidra — “a ferramenta que merece o maior crédito aqui”, com análise read-only de .exe e .DLL.",
+        "Setup: rodar o REA com Node.js e o comando MCP; como ele está “num PC de perdedor no Windows”, configura a integração com o Ghidra — “a ferramenta que merece o maior crédito aqui”, com análise read-only de .exe e .DLL.",
         "Uso como qualquer agente: “inspecione o Premiere instalado e descubra como a integração de timeline implementa essa feature específica”.",
         "Retorno: pseudo-código C-like + assembly, strings, símbolos, calls e referências — “inútil para um programador HTML obsoleto”, mas combustível pronto para o próximo agente."
       ]
     },
     {
-      "t": "3:59",
-      "titulo": "De pseudo-código a Rust — e o cheapskate",
+      "n": "08", "tag": "Ciclo completo", "t": "3:59",
+      "titulo": "Do pseudo-código ao Rust",
       "bullets": [
         "O “garbage code” vai para o agente de código e volta reimplementado em Rust: a mesma feature, agora sua — caminho direto para o Premiere Light.",
-        "Vira tese econômica: “é uma loucura qualquer vibe developer de 2026 ainda pagar por ferramenta de dev — esse dinheiro deveria estar queimando tokens”.",
-        "Supabase é chamado de “tecnologia ancestral” (wrapper da AWS com UI): analisando API e mudanças de UI com o REA, ele constrói o Studbase — “ordens de magnitude mais barato e rápido, segundo este benchmark que eu acabei de inventar” (os trust me bro benchmarks)."
+        "É a prova do ciclo inteiro de trabalho: o binário trancado virou fonte, o fonte virou Rust, e o Rust vira produto — sem uma linha escrita à mão."
       ]
     },
     {
-      "t": "4:57",
-      "titulo": "Patrocínio (Apify) e o fecho",
+      "n": "09", "tag": "Economia vibe", "t": "4:13",
+      "titulo": "Cheapskate, Studbase e os trust me bro benchmarks",
+      "bullets": [
+        "A tese econômica: “é uma loucura qualquer vibe developer de 2026 ainda pagar por ferramenta de dev — esse dinheiro deveria estar queimando tokens”.",
+        "Supabase é chamado de “tecnologia ancestral” (wrapper da AWS com UI): analisando API e mudanças de UI com o REA, ele constrói o Studbase — “ordens de magnitude mais barato e rápido, segundo este benchmark que eu acabei de inventar”.",
+        "“Trust me, bro — you can trust these trust me bro benchmarks.”"
+      ]
+    },
+    {
+      "n": "10", "tag": "Patrocínio", "t": "4:57",
+      "titulo": "Apify, os burros e o fecho",
       "bullets": [
         "Apify: MCP server que conecta o agente a milhares de actors — scrape de dados ao vivo do YouTube, monitorar preços de concorrentes no Amazon etc.",
-        "Demo: rastrear os posts mais curtidos da hashtag de burros no Instagram para convidar “os burros mais desejáveis” ao Donkr — com surpreendentemente poucos tokens (o server expõe poucos tools core e roda o resto em background).",
+        "Demo: rastrear os posts mais curtidos da hashtag de burros no Instagram para convidar “os burros mais desejáveis” ao Donkr — com surpreendentemente poucos tokens (poucos tools core expostos, resto roda em background).",
         "Oferta: US$ 25 em créditos com o código FIRESHIP25. Fecho: “This has been the Code Report. Thanks for watching.”"
       ]
     }
   ],
   "numeros": [
-    { "label": "Apps Adobe reescritos no ArtCraft", "valor": "7" },
-    { "label": "Assinatura Adobe citada no vídeo", "valor": "US$ 69/mês" },
-    { "label": "Comentários em menos de 12h", "valor": "~1.531" },
-    { "label": "Créditos Apify (código FIRESHIP25)", "valor": "US$ 25" }
+    { "label": "apps Adobe reescritos no ArtCraft", "valor": "7" },
+    { "label": "de “tributo” mensal à Adobe citado no vídeo", "valor": "US$ 69" },
+    { "label": "comentários no vídeo em menos de 12h", "valor": "~1.531" },
+    { "label": "em créditos Apify com o código FIRESHIP25", "valor": "US$ 25" }
   ],
   "citacoes": [
-    "The software is a nearly unusable pile of vibecoded horseshit.",
-    "Virtually every app in the world is now open source, whether it wants to be or not.",
-    "For someone like me who's a once-in-a-generation cinematic visionary... the Stanley Kubrick of sponsored shitposts.",
-    "Trust me, bro — you can trust these trust me bro benchmarks.",
-    "It is October 12th, 2026, and you're watching the Code Report."
+    {
+      "texto": "The software is a nearly unusable pile of vibecoded horseshit.",
+      "fonte": "Fireship · 1:33",
+      "traducao": "O software é uma pilha quase inutilizável de merda vibecodada."
+    },
+    {
+      "texto": "Virtually every app in the world is now open source, whether it wants to be or not.",
+      "fonte": "Fireship · 1:00",
+      "traducao": "Praticamente todo app do mundo agora é código aberto — queira ou não."
+    },
+    {
+      "texto": "For someone like me who's a once-in-a-generation cinematic visionary... the Stanley Kubrick of sponsored shitposts.",
+      "fonte": "Fireship · 2:23",
+      "traducao": "Para alguém como eu, visionário cinematográfico único da geração… o Stanley Kubrick dos shitposts patrocinados."
+    },
+    {
+      "texto": "Trust me, bro — you can trust these trust me bro benchmarks.",
+      "fonte": "Fireship · 4:53",
+      "traducao": "Confia em mim, mano — pode confiar nesses benchmarks confia-em-mim."
+    },
+    {
+      "texto": "It is October 12th, 2026, and you're watching the Code Report.",
+      "fonte": "Fireship · 1:10",
+      "traducao": "É 12 de outubro de 2026, e você está assistindo ao Code Report."
+    }
+  ],
+  "aplicacao": [
+    {
+      "titulo": "Se você constrói software",
+      "texto": "O fosso mudou de lugar: não é ter o código, é fazer o código ser bom. Qualidade, manutenção e julgamento de engenharia viraram o produto — o resto está virando commodity."
+    },
+    {
+      "titulo": "Se você é dev",
+      "texto": "O ofício sobe um andar: de digitador para editor de resultados. Quem entende o que o agente escreveu — timeline, assembly, arquitetura — mantém o volante. Quem só aperta play, não."
+    },
+    {
+      "titulo": "Se você é a Adobe",
+      "texto": "Trancar binário virou marketing de vulnerabilidade: cada build distribuído é um rascunho do seu produto na mão do concorrente com um agente. A saída é virar serviço — e rezar pra ninguém decompilar o servidor."
+    }
   ],
   "comentarios": {
     "coletado_em": "2026-10-12T23:21:39Z",
@@ -123,47 +187,47 @@
       { "faixa": "0", "n": 620 }
     ],
     "top": [
-      { "autor": "@iamidavis", "likes": 112, "texto": "Tech giants: “you will own nothing and be happy” / Some cool guys: “no, we will own everything”" },
-      { "autor": "@AGKolkata", "likes": 111, "texto": "We're absolutely cooked" },
-      { "autor": "@Rancium", "likes": 85, "texto": "2:27 Stanley Kubrick of sponsored shit 💀 at least he's aware" },
-      { "autor": "@Christian_Builds", "likes": 81, "texto": "Every app was always open source if you knew assembly" },
-      { "autor": "@Kanapek22", "likes": 75, "texto": "The fact that vibe-coded apps are still shit fills you with determination" },
-      { "autor": "@The.Anonymous.Anonymous", "likes": 70, "texto": "1:41 DaVinci Resolve is not open source!" },
-      { "autor": "@thexlack", "likes": 54, "texto": "spoken like the true Stanley Kubrick of Horse Tinder" },
-      { "autor": "@cristibajereanu582", "likes": 50, "texto": "I will wait for fireship video" },
-      { "autor": "@dheliriousgaming", "likes": 45, "texto": "The fact that Adoby got ripped is like a dream come true" },
-      { "autor": "@TooBored2Function", "likes": 44, "texto": "It genuinely feels like every developer is going to make their software or game online-only." },
+      { "autor": "@iamidavis", "likes": 112, "texto": "Tech giants: “you will own nothing and be happy” / Some cool guys: “no, we will own everything”", "traducao": "Gigantes da tech: “você não vai possuir nada e será feliz” / Alguns caras legais: “não, nós vamos possuir tudo”." },
+      { "autor": "@AGKolkata", "likes": 111, "texto": "We're absolutely cooked", "traducao": "Estamos completamente fritos." },
+      { "autor": "@Rancium", "likes": 85, "texto": "2:27 Stanley Kubrick of sponsored shit 💀 at least he's aware", "traducao": "2:27 Stanley Kubrick dos shitposts patrocinados 💀 pelo menos ele tem consciência disso." },
+      { "autor": "@Christian_Builds", "likes": 81, "texto": "Every app was always open source if you knew assembly", "traducao": "Todo app sempre foi código aberto — pra quem sabia assembly." },
+      { "autor": "@Kanapek22", "likes": 75, "texto": "The fact that vibe-coded apps are still shit fills you with determination", "traducao": "O fato de apps vibe-coded ainda serem uma merda me enche de determinação." },
+      { "autor": "@The.Anonymous.Anonymous", "likes": 70, "texto": "1:41 DaVinci Resolve is not open source!", "traducao": "1:41 O DaVinci Resolve não é código aberto!" },
+      { "autor": "@thexlack", "likes": 54, "texto": "spoken like the true Stanley Kubrick of Horse Tinder", "traducao": "falou igual ao verdadeiro Stanley Kubrick do Horse Tinder." },
+      { "autor": "@cristibajereanu582", "likes": 50, "texto": "I will wait for fireship video", "traducao": "Vou esperar o vídeo do Fireship (sobre isso)." },
+      { "autor": "@dheliriousgaming", "likes": 45, "texto": "The fact that Adoby got ripped is like a dream come true", "traducao": "O fato de a Adoby ter sido saqueada é um sonho realizado." },
+      { "autor": "@TooBored2Function", "likes": 44, "texto": "It genuinely feels like every developer is going to make their software or game online-only.", "traducao": "Parece mesmo que todo dev vai transformar seu software ou jogo em algo online-only." },
       { "autor": "@imhassane", "likes": 42, "texto": "O cara que limpa o prédio vibe-codou com Claude um app pro serviço de limpeza porque a plataforma cobrava caro demais. “Vamos todos virar empreendedores ou parar de trabalhar.”" },
-      { "autor": "@MrLargonaut", "likes": 42, "texto": "This is the tech apocalypse the big guys should have been worried about." }
+      { "autor": "@MrLargonaut", "likes": 42, "texto": "This is the tech apocalypse the big guys should have been worried about.", "traducao": "Esse é o apocalipse tech com que os grandões deviam ter se preocupado." }
     ],
     "temas": [
       {
         "titulo": "Correção factual: DaVinci Resolve",
-        "resumo": "Auditoria em massa na seção de comentários: são mais de 50 menções ao Resolve e ~36 comentários corrigindo que ele é freeware/proprietário, não open source — com direito a lembrete de que editor de vídeo FOSS decente simplesmente não existe (Kdenlive, GIMP, Krita e Inkscape aparecem como as alternativas reais).",
+        "resumo": "Auditoria em massa: mais de 50 menções ao Resolve e ~36 comentários corrigindo que ele é freeware/proprietário, não open source — com lembrete de que editor de vídeo FOSS decente simplesmente não existe (Kdenlive, GIMP, Krita e Inkscape aparecem como as alternativas reais).",
         "exemplos": [
-          { "autor": "@The.Anonymous.Anonymous", "likes": 70, "texto": "1:41 DaVinci Resolve is not open source!" },
-          { "autor": "@frenches1995", "likes": 36, "texto": "Fireship starting to hallucinate facts." },
-          { "autor": "@robotcoffin", "likes": 23, "texto": "1:42 DaVinci Resolve is NOT open source" },
+          { "autor": "@The.Anonymous.Anonymous", "likes": 70, "texto": "1:41 DaVinci Resolve is not open source!", "traducao": "1:41 O DaVinci Resolve não é código aberto!" },
+          { "autor": "@frenches1995", "likes": 36, "texto": "Fireship starting to hallucinate facts.", "traducao": "Fireship começando a alucinar fatos." },
+          { "autor": "@robotcoffin", "likes": 23, "texto": "1:42 DaVinci Resolve is NOT open source", "traducao": "1:42 O DaVinci Resolve NÃO é código aberto." },
           { "autor": "@ww4102", "likes": 0, "texto": "Quem é de open source de verdade sabe: não existe editor de vídeo comercial com código aberto. Parece que o Fireship não se importa tanto assim." }
         ]
       },
       {
         "titulo": "“Sempre foi open source se você lê assembly”",
-        "resumo": "A ala mais raiz do público acha o título sensacionalista: decompilar sempre foi possível — o que mudou foi o custo. Vários separam licença (open source de verdade) de binário acessível, e outros brincam que a velha arte do RE só ganhou um agente.",
+        "resumo": "A ala mais raiz acha o título sensacionalista: decompilar sempre foi possível — o que mudou foi o custo. Vários separam licença (open source de verdade) de binário acessível, e outros brincam que a velha arte do RE só ganhou um agente.",
         "exemplos": [
-          { "autor": "@Christian_Builds", "likes": 81, "texto": "Every app was always open source if you knew assembly" },
-          { "autor": "@chuck_norris", "likes": 6, "texto": "“Everything is open source if you can read assembly”" },
-          { "autor": "@TheTurnipKing", "likes": 4, "texto": "There was literally nothing but time and effort preventing you from reverse engineering anything manually" },
+          { "autor": "@Christian_Builds", "likes": 81, "texto": "Every app was always open source if you knew assembly", "traducao": "Todo app sempre foi código aberto — pra quem sabia assembly." },
+          { "autor": "@chuck_norris", "likes": 6, "texto": "“Everything is open source if you can read assembly”", "traducao": "“Tudo é código aberto se você souber ler assembly.”" },
+          { "autor": "@TheTurnipKing", "likes": 4, "texto": "There was literally nothing but time and effort preventing you from reverse engineering anything manually", "traducao": "Literalmente nada além de tempo e esforço te impedia de fazer engenharia reversa manualmente." },
           { "autor": "@juliusfucik4011", "likes": 0, "texto": "Já nos anos 90 a gente mexia em TSR no DOS pra ver o código de jogos pausados e achar onde ficavam vidas e munição. Sempre foi possível — só ficou muito mais fácil." }
         ]
       },
       {
         "titulo": "Medo: cloud, streaming e DRM",
-        "resumo": "A leitura estratégica mais repetida: se o binário virou livro aberto, a saída das empresas é não distribuir binário. Tudo vira web/streaming com DRM e TEE — “você não vai possuir nada”. Aparece até relato de quem já está batendo no muro do TEE reverse-engineerando a própria TV.",
+        "resumo": "A leitura estratégica mais repetida: se o binário virou livro aberto, a saída das empresas é não distribuir binário. Tudo vira web/streaming com DRM e TEE — “você não vai possuir nada”. Aparece até relato de quem já bateu no muro do TEE reverse-engineerando a própria TV.",
         "exemplos": [
-          { "autor": "@TooBored2Function", "likes": 44, "texto": "It genuinely feels like every developer is going to make their software or game online-only." },
-          { "autor": "@OriginBullet", "likes": 18, "texto": "More like streaming only apps and games. You must now stream your office software. 😭" },
-          { "autor": "@onlydavid", "likes": 16, "texto": "Here come the encrypted application executable infrastructure to our desktop PCs." },
+          { "autor": "@TooBored2Function", "likes": 44, "texto": "It genuinely feels like every developer is going to make their software or game online-only.", "traducao": "Parece mesmo que todo dev vai transformar seu software ou jogo em algo online-only." },
+          { "autor": "@OriginBullet", "likes": 18, "texto": "More like streaming only apps and games. You must now stream your office software. 😭", "traducao": "Mais pra apps e jogos só por streaming. Agora você vai transmitir até seu editor de texto. 😭" },
+          { "autor": "@onlydavid", "likes": 16, "texto": "Here come the encrypted application executable infrastructure to our desktop PCs.", "traducao": "Lá vêm as infraestruturas de executáveis criptografados para os nossos desktops." },
           { "autor": "@gogodev2", "likes": 3, "texto": "Reverse-engineerei minha TV até bater no TEE e no kernel criptografado. O futuro é: você tem um caixa-preta com TPM que só fala com o servidor." }
         ]
       },
@@ -171,17 +235,17 @@
         "titulo": "“You will own nothing” invertido — e karma contra a Adobe",
         "resumo": "O mote corporativo virado contra quem o cunhou é o comentário mais curtido do vídeo. Embaixo, catarse anti-Adobe: taxa de cancelamento, assinatura, monopólio — e o sabor de “quem quis substituir todo mundo com IA se deu mal primeiro”.",
         "exemplos": [
-          { "autor": "@iamidavis", "likes": 112, "texto": "Tech giants: “you will own nothing and be happy” / Some cool guys: “no, we will own everything”" },
-          { "autor": "@dheliriousgaming", "likes": 45, "texto": "The fact that Adoby got ripped is like a dream come true" },
-          { "autor": "@sanderschat", "likes": 35, "texto": "“The major companies will own nothing and be happy”" },
+          { "autor": "@iamidavis", "likes": 112, "texto": "Tech giants: “you will own nothing and be happy” / Some cool guys: “no, we will own everything”", "traducao": "Gigantes da tech: “você não vai possuir nada e será feliz” / Alguns caras legais: “não, nós vamos possuir tudo”." },
+          { "autor": "@dheliriousgaming", "likes": 45, "texto": "The fact that Adoby got ripped is like a dream come true", "traducao": "O fato de a Adoby ter sido saqueada é um sonho realizado." },
+          { "autor": "@sanderschat", "likes": 35, "texto": "“The major companies will own nothing and be happy”", "traducao": "“As grandes empresas vão possuir nada e serão felizes.”" },
           { "autor": "@juniper-salad", "likes": 0, "texto": "Cancelei a Adobe hoje. Me cobraram US$ 43 por cancelar cedo. F them." }
         ]
       },
       {
         "titulo": "Veredito da audiência: vibe-code ainda é slop (com ilhas de qualidade)",
-        "resumo": "O diagnóstico do vídeo foi comprado sem drama: os clones são alpha e travam. Mas há contra-exemplos coerentes — quem testou o Photocraft, o VectorCraft e o PDFCraft diz que “funciona, sim”. A régua da audiência: slop hoje, surpreendentemente útil amanhã.",
+        "resumo": "O diagnóstico do vídeo foi comprado sem drama: os clones são alpha e travam. Mas há contra-exemplos coerentes — quem testou o Photocraft, o VectorCraft e o PDFCraft diz que “funciona, sim”. A régua: slop hoje, surpreendentemente útil amanhã.",
         "exemplos": [
-          { "autor": "@Kanapek22", "likes": 75, "texto": "The fact that vibe-coded apps are still shit fills you with determination" },
+          { "autor": "@Kanapek22", "likes": 75, "texto": "The fact that vibe-coded apps are still shit fills you with determination", "traducao": "O fato de apps vibe-coded ainda serem uma merda me enche de determinação." },
           { "autor": "@ng.mgk1104", "likes": 1, "texto": "FilmCraft runs like ass — jogar um 4K log nele transforma meu M4 Mac mini em PowerPoint." },
           { "autor": "@antonioe.2396", "likes": 0, "texto": "Parem de esculachar o ArtCraft. O PDFCraft é GOATED." },
           { "autor": "@Dr.Fortyseven", "likes": 0, "texto": "Decepção com a take: nem todo app está ruim. Usei o Photocraft num projeto pequeno essa semana sem problemas." }
@@ -189,24 +253,46 @@
       },
       {
         "titulo": "Ceticismo com a própria demo",
-        "resumo": "Ala técnica desconfia do número de palco: “ocean front property in Arizona” para quem acha que um dev fez isso numa semana; “o ArtCraft nem usou o REA”; “isso é 80% Ghidra”. E avisos jurídicos: clean room de verdade não se faz com LLM + decompilação — “pelas calças” seria melhor.",
+        "resumo": "Ala técnica desconfia do número de palco: “ocean front property in Arizona” para quem acha que um dev fez isso numa semana; “o ArtCraft nem usou o REA”; “isso é 80% Ghidra”. E avisos jurídicos: clean room de verdade não se faz com LLM + decompilação.",
         "exemplos": [
-          { "autor": "@JediOfTheRepublic", "likes": 8, "texto": "If you think some developer opened up Claude and reversed engineered Adobe products in a week, I got some ocean front property in Arizona to sell you." },
+          { "autor": "@JediOfTheRepublic", "likes": 8, "texto": "If you think some developer opened up Claude and reversed engineered Adobe products in a week, I got some ocean front property in Arizona to sell you.", "traducao": "Se você acha que um dev abriu o Claude e fez engenharia reversa dos produtos Adobe numa semana, tenho um terreno de frente pro mar no Arizona pra te vender." },
           { "autor": "@DJVARAO", "likes": 1, "texto": "CraftArt didn't use REA" },
           { "autor": "@user-fx3gb9bu3o", "likes": 0, "texto": "Esse projeto é uns 80% Ghidra." },
-          { "autor": "@jimmy21584", "likes": 0, "texto": "“Clean-room reverse engineering” é o único jeito de não ser processado — e LLM + decompilação não é isso. Se fosse eu, teria queimado esses arquivos." }
+          { "autor": "@jimmy21584", "likes": 0, "texto": "“Clean-room reverse engineering” é o único jeito de não ser processado — e LLM + decompilação não é isso." }
         ]
       },
       {
         "titulo": "Meta: o meme do Kubrick, o ad e a falta de conclusão",
         "resumo": "“Stanley Kubrick of sponsored shitposts” virou selo do canal na hora — meia dúzia de comentários top só com isso. Junto vem a crítica mais repetida: o experimento do Premiere Light não tem payoff (o vídeo termina sem mostrar o resultado), e o patrocínio ocupa espaço demais.",
         "exemplos": [
-          { "autor": "@thexlack", "likes": 54, "texto": "spoken like the true Stanley Kubrick of Horse Tinder" },
+          { "autor": "@thexlack", "likes": 54, "texto": "spoken like the true Stanley Kubrick of Horse Tinder", "traducao": "falou igual ao verdadeiro Stanley Kubrick do Horse Tinder." },
           { "autor": "@ldesigner392", "likes": 1, "texto": "Esperei até agora o resultado: o Premiere reverse-engineered funcionou ou deu problema?" },
           { "autor": "@RonPaulBot1234", "likes": 1, "texto": "50% incompleto, sem conclusão, e depois de 4:15 é só anúncio. Thumbs down." },
-          { "autor": "@jrow96", "likes": 0, "texto": "This was a very long ad" }
+          { "autor": "@jrow96", "likes": 0, "texto": "This was a very long ad", "traducao": "Isso foi um anúncio muito longo." }
         ]
       }
+    ],
+    "insights_positivos": [
+      { "titulo": "A era dos piratas foi decretada", "texto": "Tom dominante: “we're cooking”. A audiência vê no REA uma arma de democratização — e um espelho que desmascara o modelo Adobe." },
+      { "titulo": "DIY em modo extremo", "texto": "Gente vibe-codando app pra fugir de taxa de plataforma (o faxineiro do @imhassane), TV reverse-engineered batendo no TEE, ports de jogos com Ghidra + Claude." },
+      { "titulo": "O debate subiu de nível", "texto": "Saiu do “IA escreve código?” para incentivos, clean room e arquitetura de defesa (cloud/DRM/TEE). A turma está lendo o jogo três jogadas à frente." },
+      { "titulo": "Ódio à Adobe é consenso absoluto", "texto": "Nenhum thread defendendo a Adobe. O único contra-argumento aparece na ética do roubo — nunca na simpatia pela empresa." }
+    ],
+    "insights_negativos": [
+      { "titulo": "O recorte virou auditoria", "texto": "~36 correções sobre o DaVinci: um erro factual do vídeo virou o assunto número um da seção de comentários." },
+      { "titulo": "Zero veredito, zero confiança", "texto": "O experimento do Premiere Light não tem conclusão: “esperei o resultado e nada” é reclamação recorrente — o vídeo vende o começo e corta antes do fim." },
+      { "titulo": "Ceticismo com o palco", "texto": "“Ocean front property in Arizona” para o 1-dev-em-uma-semana; “80% Ghidra”; dúvida sobre o que é demo e o que é marketing." },
+      { "titulo": "Ad longo demais", "texto": "O último terço é patrocínio — “this was a very long ad” aparece em vários threads e azeda a percepção de valor." }
+    ],
+    "consenso": [
+      "Qualquer app é decompilável agora — e as empresas vão reagir (cloud, streaming, DRM, TEE).",
+      "A Adobe “mereceu”: catarse unânime com taxas, assinaturas e monopólio.",
+      "Slop atual ≠ estado final: todo mundo espera a próxima iteração dos clones (e alguns já funcionam)."
+    ],
+    "briga": [
+      "Ética e legalidade: roubo vs. libertação — clean room, DMCA e “piracy é sintoma de mau serviço”.",
+      "Licença vs. acesso: chamar binário decompilado de “open source” é o erro semântico que o título comete.",
+      "Otimismo (era dos piratas) vs. apocalipse (tudo virará assinatura num thin client) — os dois lados usam o mesmo vídeo como prova."
     ],
     "veredito": "A audiência comprou o tom satírico e a catarse anti-Adobe — mas transformou a seção de comentários em auditoria do próprio vídeo: o erro do DaVinci Resolve rendeu ~36 correções e o final sem veredito (o Premiere Light fica prometido, não demonstrado) é a crítica mais repetida. Entre o hype (era dos piratas, “we're cooking”) e o medo do lockdown (cloud, streaming, DRM/TEE), o público se dividiu — e cunhou o selo definitivo do canal: “the Stanley Kubrick of sponsored shitposts”."
   }
