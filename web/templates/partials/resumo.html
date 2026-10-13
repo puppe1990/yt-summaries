@@ -27,6 +27,41 @@
   <ul class="sr-bullets">{{ range .TLDR }}<li>{{ . }}</li>{{ end }}</ul>
   {{ end }}
 
+  {{ with .Planos }}{{ if .Colunas }}
+  {{ $p := . }}
+  <h2 class="sr-h2"><span>Planos</span>{{ if .Titulo }}{{ .Titulo }}{{ else }}O que tem em cada plano{{ end }}</h2>
+  <div class="sr-planos-wrap">
+    <table class="sr-planos">
+      <thead>
+        <tr>
+          <th class="sr-planos-feat">Recurso</th>
+          {{ range $i, $col := .Colunas }}
+          <th{{ if $p.HotCol $i }} class="is-hot"{{ end }}>
+            {{ if $p.HotCol $i }}<span class="sr-planos-badge">mais popular</span>{{ end }}
+            <span class="sr-planos-name">{{ $col }}</span>
+            {{ if lt $i (len $p.Precos) }}<span class="sr-planos-price">{{ index $p.Precos $i }}</span>{{ end }}
+          </th>
+          {{ end }}
+        </tr>
+      </thead>
+      <tbody>
+        {{ range .Grupos }}
+        <tr class="sr-planos-group"><th colspan="{{ $p.ColSpan }}">{{ .Nome }}</th></tr>
+        {{ range .Linhas }}
+        <tr>
+          <th>{{ .Recurso }}</th>
+          {{ range $i, $cell := .Celulas }}
+          <td{{ if $p.HotCol $i }} class="is-hot"{{ end }}>{{ $cell }}</td>
+          {{ end }}
+        </tr>
+        {{ end }}
+        {{ end }}
+      </tbody>
+    </table>
+  </div>
+  {{ if .Legenda }}<p class="sr-planos-legenda">{{ .Legenda }}</p>{{ end }}
+  {{ end }}{{ end }}
+
   {{ range .Secoes }}
   <h2 class="sr-h2"><span>{{ .N }} · {{ .Tag }}{{ if .T }} · {{ .T }}{{ end }}</span>{{ .Titulo }}</h2>
   {{ if .Bullets }}<ul class="sr-bullets">{{ range .Bullets }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}

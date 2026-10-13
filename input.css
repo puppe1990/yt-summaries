@@ -828,3 +828,95 @@ html.light .sr-item-title {
 html.light .sr-item:hover .sr-item-title {
   color: #1a6f64;
 }
+
+.sr-planos-wrap {
+  overflow-x: auto;
+  margin: 0 0 0.8rem;
+  border: 1px solid var(--sr-card-line);
+  background: var(--sr-card);
+}
+
+.sr-planos {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+}
+
+.sr-planos th,
+.sr-planos td {
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--sr-card-line);
+  text-align: center;
+  color: var(--sr-text);
+  vertical-align: middle;
+}
+
+.sr-planos thead th {
+  border-bottom: 1px solid var(--sr-ember);
+  color: var(--sr-paper-2);
+}
+
+.sr-planos-feat,
+.sr-planos tbody th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--sr-paper-2);
+  white-space: nowrap;
+}
+
+.sr-planos-name {
+  display: block;
+  font-family: "Fraunces", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sr-paper-2);
+}
+
+.sr-planos-price {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--sr-muted);
+  font-weight: 500;
+}
+
+.sr-planos-badge {
+  display: inline-block;
+  margin-bottom: 0.25rem;
+  padding: 0.12rem 0.4rem;
+  background: var(--sr-ember-strong);
+  color: var(--sr-paper);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.sr-planos .is-hot {
+  background: rgba(95, 179, 168, 0.1);
+}
+
+.sr-planos-group th {
+  text-align: left;
+  padding-top: 0.95rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: var(--sr-ember);
+  border-bottom: 1px solid var(--sr-ember);
+  background: transparent;
+}
+
+.sr-planos-legenda {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--sr-muted);
+  margin: 0 0 2.2rem;
+}
+
+html.light .sr-planos .is-hot {
+  background: rgba(26, 111, 100, 0.1);
+}

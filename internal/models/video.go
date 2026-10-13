@@ -54,8 +54,42 @@ type Resumo struct {
 	Numeros   []Numero  `json:"numeros"`
 	Citacoes  []Citacao `json:"citacoes"`
 	Aplicacao []Item    `json:"aplicacao"`
+	Planos    Planos    `json:"planos,omitempty"`
 
 	Comentarios Comentarios `json:"comentarios"`
+}
+
+// Planos is an optional comparison table (subscription tiers, feature matrix).
+type Planos struct {
+	Titulo   string        `json:"titulo"`
+	Legenda  string        `json:"legenda"`
+	Colunas  []string      `json:"colunas"`
+	Precos   []string      `json:"precos"`
+	Destaque string        `json:"destaque,omitempty"`
+	Grupos   []PlanosGrupo `json:"grupos"`
+}
+
+type PlanosGrupo struct {
+	Nome   string        `json:"nome"`
+	Linhas []PlanosLinha `json:"linhas"`
+}
+
+type PlanosLinha struct {
+	Recurso string   `json:"recurso"`
+	Celulas []string `json:"celulas"`
+}
+
+// ColSpan is feature column plus one cell per plan.
+func (p Planos) ColSpan() int {
+	return len(p.Colunas) + 1
+}
+
+// HotCol is true when column i is the highlighted plan.
+func (p Planos) HotCol(i int) bool {
+	if i < 0 || i >= len(p.Colunas) {
+		return false
+	}
+	return p.Destaque != "" && p.Colunas[i] == p.Destaque
 }
 
 // Tese é uma placa ("PLACA 01") com lead em negrito e o parágrafo.

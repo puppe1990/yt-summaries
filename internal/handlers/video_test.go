@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -9,6 +10,7 @@ import (
 	"github.com/puppe1990/amarra-cais/pkg/cais"
 
 	appi18n "github.com/puppe1990/yt-summaries/internal/i18n"
+	"github.com/puppe1990/yt-summaries/internal/models"
 	"github.com/puppe1990/yt-summaries/internal/store"
 )
 
@@ -67,5 +69,55 @@ func TestVideo_NotFound(t *testing.T) {
 	}
 	if !strings.Contains(body, "não está no cais") {
 		t.Errorf("esperado a página 404 desenhada, body começa com: %.200s", body)
+	}
+}
+
+func TestVideo_RendersPlanosTable(t *testing.T) {
+	s := setupTestStore(t)
+	resumo := models.Resumo{
+		SourceID: "artigo-planos",
+		Slug:     "tabela-planos",
+		Title:    "Planos",
+		TLDR:     []string{"tldr dos planos"},
+		Planos: models.Planos{
+			Titulo:   "O que tem em cada plano",
+			Legenda:  "Pool semanal compartilhado.",
+			Colunas:  []string{"Free", "Plus", "Premium"},
+			Precos:   []string{"US$ 0", "US$ 8", "US$ 30"},
+			Destaque: "Premium",
+			Grupos: []models.PlanosGrupo{{
+				Nome: "Grok",
+				Linhas: []models.PlanosLinha{{
+					Recurso: "Grok Bot",
+					Celulas: []string{"—", "—", "sim"},
+				}},
+			}},
+		},
+	}
+	payload, err := json.Marshal(resumo)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := s.UpsertVideo(models.Video{
+		YouTubeID:  resumo.SourceID,
+		Slug:       resumo.Slug,
+		Title:      resumo.Title,
+		SearchText: resumo.SearchText(),
+		Payload:    string(payload),
+	}); err != nil {
+		t.Fatal(err)
+	}
+
+	code, body := getVideoBody(t, newVideo(t, s), "tabela-planos")
+	if code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", code)
+	}
+	for _, want := range []string{"sr-planos", "O que tem em cada plano", "Grok Bot", "US$ 30", "Pool semanal compartilhado."} {
+		if !strings.Contains(body, want) {
+			t.Errorf("página deveria conter %q", want)
+		}
+	}
+	if !strings.Contains(body, "is-hot") {
+		t.Errorf("coluna em destaque deveria marcar is-hot")
 	}
 }
