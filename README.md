@@ -30,6 +30,19 @@ make ci               # test + lint + format-check
 
 Agent conventions live in [`AGENTS.md`](AGENTS.md).
 
+## Brand (icon + Open Graph)
+
+The scaffold placeholders in `web/static/` are replaced by the darkroom/paper mark
+(film rail + thesis plate + play) and a 1200×630 social card.
+
+```bash
+scripts/generate-brand.sh
+```
+
+Sources: `web/static/icons/icon.svg`, `web/static/icons/icon-maskable.svg`,
+`design/og.html`. The maskable icon keeps the mark inside the inner 80% so
+Android circle crops do not clip the sprockets or the play tip.
+
 ## Layout
 
 | Path                  | Responsibility                                                    |

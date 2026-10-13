@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="YT Resumos">
+  <!-- Maskable: darkroom bleeds to the edges; mark in the inner 80% safe zone. Rebuild: scripts/generate-brand.sh -->
+  <rect width="512" height="512" fill="#120e0b"/>
+  <g transform="translate(256 256) scale(0.78) translate(-256 -256)">
+    <rect x="76" y="120" width="72" height="272" fill="#1c140e"/>
+    <rect x="76" y="120" width="7" height="272" fill="#3a2418"/>
+
+    <g fill="#efe4cf">
+      <rect x="96" y="144" width="28" height="36" rx="5"/>
+      <rect x="96" y="238" width="28" height="36" rx="5"/>
+      <rect x="96" y="332" width="28" height="36" rx="5"/>
+    </g>
+    <g fill="#120e0b">
+      <rect x="102" y="152" width="16" height="20" rx="3"/>
+      <rect x="102" y="246" width="16" height="20" rx="3"/>
+      <rect x="102" y="340" width="16" height="20" rx="3"/>
+    </g>
+
+    <rect x="186" y="168" width="248" height="212" fill="#5fb3a8" fill-opacity="0.34"/>
+    <rect x="172" y="152" width="248" height="212" fill="#efe4cf"/>
+    <rect x="190" y="138" width="82" height="24" fill="#1f7a6e"/>
+
+    <path d="M248 196 L248 320 L378 258 Z" fill="#120e0b"/>
+    <rect x="248" y="336" width="72" height="4" fill="#5fb3a8"/>
+  </g>
+</svg>

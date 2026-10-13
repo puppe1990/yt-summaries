@@ -1,12 +1,13 @@
 {
-  "name": "yt-resumos",
-  "short_name": "yt-resumos",
-  "description": "yt-resumos — powered by Cais",
+  "name": "YT Resumos",
+  "short_name": "YT Resumos",
+  "description": "Super resumos de vídeos: transcrição + comentários, numa leitura só.",
   "start_url": "/",
-  "display": "fullscreen",
-  "background_color": "#081014",
-  "theme_color": "#c9893a",
+  "display": "standalone",
+  "background_color": "#120e0b",
+  "theme_color": "#120e0b",
   "orientation": "portrait-primary",
+  "lang": "pt-BR",
   "icons": [
     {
       "src": "/static/icons/icon-192.png",
