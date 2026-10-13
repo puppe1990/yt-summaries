@@ -558,6 +558,16 @@ html.light .sr-thesis {
   letter-spacing: -0.03em;
   margin: 2.5rem 0 0.9rem;
   color: var(--sr-paper-2);
+  scroll-margin-top: 5rem;
+}
+
+.sr-h2 > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sr-h2 > a:hover span {
+  color: var(--sr-gold);
 }
 
 .sr-h2 span {
@@ -725,6 +735,10 @@ html.light .sr-title em,
 html.light .sr-h2 span,
 html.light .sr-pill {
   color: #1a6f64;
+}
+
+html.light .sr-h2 > a:hover span {
+  color: #24170f;
 }
 
 .sr-index {

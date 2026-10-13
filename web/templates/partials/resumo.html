@@ -23,13 +23,13 @@
   {{ end }}
 
   {{ if .TLDR }}
-  <h2 class="sr-h2"><span>Em 30 segundos</span>O vídeo em cinco tiros</h2>
+  <h2 class="sr-h2" id="em-30-segundos"><a href="#em-30-segundos"><span>Em 30 segundos</span>O vídeo em cinco tiros</a></h2>
   <ul class="sr-bullets">{{ range .TLDR }}<li>{{ . }}</li>{{ end }}</ul>
   {{ end }}
 
   {{ with .Planos }}{{ if .Colunas }}
   {{ $p := . }}
-  <h2 class="sr-h2"><span>Planos</span>{{ if .Titulo }}{{ .Titulo }}{{ else }}O que tem em cada plano{{ end }}</h2>
+  <h2 class="sr-h2" id="planos"><a href="#planos"><span>Planos</span>{{ if .Titulo }}{{ .Titulo }}{{ else }}O que tem em cada plano{{ end }}</a></h2>
   <div class="sr-planos-wrap">
     <table class="sr-planos">
       <thead>
@@ -63,33 +63,33 @@
   {{ end }}{{ end }}
 
   {{ range .Secoes }}
-  <h2 class="sr-h2"><span>{{ .N }} · {{ .Tag }}{{ if .T }} · {{ .T }}{{ end }}</span>{{ .Titulo }}</h2>
+  <h2 class="sr-h2" id="{{ .Anchor }}"><a href="#{{ .Anchor }}"><span>{{ .N }} · {{ .Tag }}{{ if .T }} · {{ .T }}{{ end }}</span>{{ .Titulo }}</a></h2>
   {{ if .Bullets }}<ul class="sr-bullets">{{ range .Bullets }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
   {{ end }}
 
   {{ if .Numeros }}
-  <h2 class="sr-h2"><span>Números</span>O vídeo em cifras</h2>
+  <h2 class="sr-h2" id="numeros"><a href="#numeros"><span>Números</span>O vídeo em cifras</a></h2>
   <div class="sr-grid-3">
     {{ range .Numeros }}<article class="sr-card"><div class="sr-n">{{ .Valor }}</div><h3>{{ .Label }}</h3></article>{{ end }}
   </div>
   {{ end }}
 
   {{ if .Citacoes }}
-  <h2 class="sr-h2"><span>Citações</span>O que ficou da fala</h2>
+  <h2 class="sr-h2" id="citacoes"><a href="#citacoes"><span>Citações</span>O que ficou da fala</a></h2>
   {{ range .Citacoes }}
   <blockquote class="sr-pull">“{{ .Texto }}”{{ if .Traducao }}<span class="sr-translation">{{ .Traducao }}</span>{{ end }}<cite>{{ .Fonte }}</cite></blockquote>
   {{ end }}
   {{ end }}
 
   {{ if .Aplicacao }}
-  <h2 class="sr-h2"><span>Levar para casa</span>O que fazer com isso</h2>
+  <h2 class="sr-h2" id="levar-para-casa"><a href="#levar-para-casa"><span>Levar para casa</span>O que fazer com isso</a></h2>
   <div class="sr-grid-2">
     {{ range .Aplicacao }}<article class="sr-card"><h3>{{ .Titulo }}</h3><p>{{ .Texto }}</p></article>{{ end }}
   </div>
   {{ end }}
 
   {{ if .Comentarios.Threads }}
-  <h2 class="sr-h2"><span>A plateia</span>{{ .Comentarios.Threads }} vozes no recorte</h2>
+  <h2 class="sr-h2" id="a-plateia"><a href="#a-plateia"><span>A plateia</span>{{ .Comentarios.Threads }} vozes no recorte</a></h2>
   <div class="sr-meta">
     {{ if .Comentarios.ColetadoEm }}<span>coleta {{ .Comentarios.ColetadoEm }}</span>{{ end }}
     {{ if .Comentarios.Esperado }}<span>~{{ .Comentarios.Esperado }} comentários no total</span>{{ end }}

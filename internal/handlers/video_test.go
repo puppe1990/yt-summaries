@@ -121,3 +121,53 @@ func TestVideo_RendersPlanosTable(t *testing.T) {
 		t.Errorf("coluna em destaque deveria marcar is-hot")
 	}
 }
+
+func TestVideo_HeadingAnchors(t *testing.T) {
+	s := setupTestStore(t)
+	resumo := models.Resumo{
+		SourceID: "artigo-ancoras",
+		Slug:     "ancoras",
+		Title:    "Âncoras",
+		TLDR:     []string{"tldr"},
+		Planos: models.Planos{
+			Colunas: []string{"Free"},
+			Precos:  []string{"US$ 0"},
+		},
+		Secoes: []models.Secao{{
+			N: "01", Tag: "Anúncio", Titulo: "Uma thread",
+		}},
+		Numeros:     []models.Numero{{Label: "n", Valor: "1"}},
+		Citacoes:    []models.Citacao{{Texto: "fala", Fonte: "fonte"}},
+		Aplicacao:   []models.Item{{Titulo: "casa", Texto: "faça"}},
+		Comentarios: models.Comentarios{Threads: 3},
+	}
+	payload, err := json.Marshal(resumo)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := s.UpsertVideo(models.Video{
+		YouTubeID:  resumo.SourceID,
+		Slug:       resumo.Slug,
+		Title:      resumo.Title,
+		SearchText: resumo.SearchText(),
+		Payload:    string(payload),
+	}); err != nil {
+		t.Fatal(err)
+	}
+
+	code, body := getVideoBody(t, newVideo(t, s), "ancoras")
+	if code != http.StatusOK {
+		t.Fatalf("status = %d, want 200", code)
+	}
+	for _, id := range []string{
+		"em-30-segundos", "planos", "01-anuncio",
+		"numeros", "citacoes", "levar-para-casa", "a-plateia",
+	} {
+		if !strings.Contains(body, `id="`+id+`"`) {
+			t.Errorf("h2 deveria ter id=%q", id)
+		}
+		if !strings.Contains(body, `href="#`+id+`"`) {
+			t.Errorf("h2 deveria ligar href=#%s", id)
+		}
+	}
+}
